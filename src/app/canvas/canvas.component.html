@@ -1,0 +1,42 @@
+<ul>
+  <li>
+      <button (click)="buttonsMethods.setColorBlue()">Blue</button>
+  </li>
+  <li>
+      <button (click)="buttonsMethods.setColorGreen()"> Green</button>
+  </li>
+  <li>
+      <button (click)="buttonsMethods.setColorPink()">Pink</button>
+  </li>
+  <li>
+    <button (click)="buttonsMethods.showColor()">Log Color</button>
+  </li>
+</ul>
+
+<div>
+  <button id="openB">Open Highlight</button>
+  <button id="closeB">Close Highlight</button>
+  <label>
+      Line Width: 
+      <input type="number" name="width" id="lineWidth" placeholder="3"/>
+  </label>
+  <label>
+      line Size:
+      <input type="number" id="lineSize" placeholder="10"/>
+  </label>
+  
+</div>
+
+
+<div>
+  <button id="backward">Backward</button>
+  <button id="forward">Forward</button>
+  <button id="eraseAll">Erase All</button>
+</div>
+<div>
+  <button id="imageButton">Load Image</button>
+</div>
+<canvas id="myCanvas" >
+
+</canvas>
+<img id="canvas-image" src="image.jpeg" style="display: none;"/>
