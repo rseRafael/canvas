@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../event.service';
 
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
   styleUrls: ['./canvas.component.css']
 })
+
 export class CanvasComponent implements OnInit {
 
   private stack = [];
   private garbageStack = [];
   private color = 'black';
   private mode = true;
-
+  private imagePath = "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg";
   private ids = {
     'blueButton': ''
   }
@@ -37,7 +39,7 @@ export class CanvasComponent implements OnInit {
     },
   }
 
-  constructor(){ 
+  constructor(private eventService: EventService){ 
   }
 
   ngOnInit() {
@@ -94,9 +96,10 @@ export class CanvasComponent implements OnInit {
                 "width": width,
                 "size": size,
             });
+            console.log(this.stack);
             this.garbageStack = [];
         }
-        
+    
     }
   }
   backward(): boolean{
@@ -126,10 +129,15 @@ export class CanvasComponent implements OnInit {
     ctx.fillRect(0,0,canvas.clientWidth, canvas.clientHeight);
   }
   loadImage(){
-    var img = document.getElementById("canvas-image");
+    //var img = document.getElementById("canvas-image");
+    var img = new Image();
+    img.src = this.imagePath;
     var canvas: any = document.getElementById("myCanvas");
+    canvas.setAttribute("height", img.height);
+    canvas.setAttribute("width", img.width);
     var context = canvas.getContext("2d");
     context.drawImage(img, 0, 0);
+
   }
   recreateMarkUp(){
     this.loadImage();
@@ -138,5 +146,35 @@ export class CanvasComponent implements OnInit {
     for(var i = 0; i < this.stack.length; i++){
         this.createMarkUp(ctx, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
     }
+  }
+  canvasClickHandler(mouseEvent, ...arr){
+    var canvas: any = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var lineWidth: any = document.getElementById("lineWidth");
+    var lineSize: any = document.getElementById("lineSize");
+    console.log("\t\t\tMOUSE EVENT: ");
+    mouseEvent = this.eventService.getMouseEvent();
+    // both lineSize.value and lineWidth.value returns a integer-like string value. Math.round transforms an empty string into 0.
+    this.createMarkUp(ctx, mouseEvent.clientX, mouseEvent.clientY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value));
+    this.createMarkUp(ctx, mouseEvent.screenX, mouseEvent.screenY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value));
+  }
+  testClickHandler(m){
+    var canvas: any = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var lineSize: any = document.getElementById("lineSize");
+    ctx.fillStyle = "green";
+    console.log("\t\t\t\t\tREAL VALUES");
+
+    //offsetX and offsetY são clientX - canvas.getClientRects()[0].x && clientY - canvas.getClientRects()[0].y;
+    
+    console.log(m.offsetX, m.offsetY)
+    var x = m.clientX - canvas.getClientRects()[0].x;
+    var y = m.clientY - canvas.getClientRects()[0].y;
+    console.log("\t\t\t\t\tCOMPARE");
+    console.log(x, y);
+    ctx.fillRect(m.clientX - canvas.getClientRects()[0].x, m.clientY - canvas.getClientRects()[0].y, 10, 10);
+    console.log("\t\tMOUSE EVENT");
+    console.log(m);
+    ctx.stroke();
   }
 }

@@ -9,7 +9,7 @@ import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
-import { NavigationComponent } from './navigation/navigation.component';
+
 import { CanvasComponent } from './canvas/canvas.component';
 
 
@@ -18,8 +18,7 @@ import { CanvasComponent } from './canvas/canvas.component';
     AppComponent,
     HomeComponent,
     NewBookComponent,
-    NavigationComponent,
-    CanvasComponent
+    CanvasComponent,
   ],
   imports: [
     BrowserModule,

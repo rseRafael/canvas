@@ -1,1 +1,5 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.main-container{
+    height: 100%;
+    border: 1px solid black;
+}
