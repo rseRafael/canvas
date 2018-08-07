@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch -->
+<html lang="pt-BR" dir="ltr" class=""><head prefix="og: http://ogp.me/ns#"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <script async="" src="./Usando Fetch - Referência da API Web _ MDN_files/analytics.js"></script><script>(function(d) { d.className = d.className.replace(/\bno-js/, ''); })(document.documentElement);</script>
+  <title>Usando Fetch - Referência da API Web | MDN</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index, follow">
+
+  
+<link rel="preload" href="https://developer.mozilla.org/static/fonts/locales/ZillaSlab-Regular.f9de6143fdfa.woff2" as="font" type="font/woff2" crossorigin="">
+    <link rel="home" href="https://developer.mozilla.org/pt-BR/">
+    <link rel="license" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#license">
+  
+
+  
+    
+    
+
+    <link href="./Usando Fetch - Referência da API Web _ MDN_files/mdn.8a5c5aedd500.css" rel="stylesheet" type="text/css">
+
+    
+  
+
+    <link href="./Usando Fetch - Referência da API Web _ MDN_files/wiki.d21de5ff3703.css" rel="stylesheet" type="text/css">
+
+
+    
+
+  <link href="./Usando Fetch - Referência da API Web _ MDN_files/locale-pt-BR.ca0bca387b42.css" rel="stylesheet" type="text/css">
+
+  
+    <script>
+    // Mozilla DNT Helper
+    /* This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/. */ if(typeof Mozilla==='undefined'){var Mozilla={}}Mozilla.dntEnabled=function(dnt,ua){'use strict';var dntStatus=dnt||navigator.doNotTrack||window.doNotTrack||navigator.msDoNotTrack;var userAgent=ua||navigator.userAgent;var anomalousWinVersions=['Windows NT 6.1','Windows NT 6.2','Windows NT 6.3'];var fxMatch=userAgent.match(/Firefox\/(\d+)/);var ieRegEx=/MSIE|Trident/i;var isIE=ieRegEx.test(userAgent);var platform=userAgent.match(/Windows.+?(?=;)/g);if(isIE&&typeof Array.prototype.indexOf!=='function'){return false}else if(fxMatch&&parseInt(fxMatch[1],10)<32){dntStatus='Unspecified'}else if(isIE&&platform&&anomalousWinVersions.indexOf(platform.toString())!==-1){dntStatus='Unspecified'}else{dntStatus={'0':'Disabled','1':'Enabled'}[dntStatus]||'Unspecified'}return dntStatus==='Enabled'?true:false};
+    // only load GA if DNT is not enabled
+    if (Mozilla && !Mozilla.dntEnabled()) {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-36116321-5', 'mozilla.org');
+        ga('set', 'anonymizeIp', true);
+
+        
+
+        // dimension9 == "Section editing"
+        
+            // dimension12 == 'Page Revision'
+            ga('set', 'dimension12', '1378683');
+            // dimension17 == 'English Slug'
+            ga('set', 'dimension17', 'Web/API/Fetch_API/Using_Fetch');
+
+        (function() {
+            // http://cfsimplicity.com/61/removing-analytics-clutter-from-campaign-urls
+            var win = window;
+            var removeUtms = function(){
+                var location = win.location;
+                if (location.href.indexOf('utm') != -1 && win.history.replaceState) {
+                    win.history.replaceState({}, '', location.pathname);
+                }
+            };
+
+            ga('send', 'pageview', {'hitCallback': removeUtms});
+        })();
+    }
+</script>
+  
+    <!-- common social tags -->
+    
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png">
+    <meta property="og:site_name" content="MDN Web Docs">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://developer.mozilla.org/static/img/opengraph-logo.72382e605ce3.png">
+    <meta name="twitter:site" content="@MozDevNet">
+    <meta name="twitter:creator" content="@MozDevNet">
+    <link rel="search" type="application/opensearchdescription+xml" href="https://developer.mozilla.org/pt-BR/search/xml" title="MDN Web Docs">
+  
+  <!-- third-generation iPad with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https://developer.mozilla.org/static/img/favicon144.e7e21ca263ca.png">
+  <!-- iPhone with high-resolution Retina display: -->
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="https://developer.mozilla.org/static/img/favicon114.d526f38b09c5.png">
+  <!-- first- and second-generation iPad: -->
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="https://developer.mozilla.org/static/img/favicon72.cc65d1d762a0.png">
+  <!-- non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+  <link rel="apple-touch-icon-precomposed" href="https://developer.mozilla.org/static/img/favicon57.de33179910ae.png">
+  <!-- basic favicon -->
+  <link rel="shortcut icon" href="https://developer.mozilla.org/static/img/favicon32.7f3da72dcea1.png">
+  <!--[if IE]>
+  <meta http-equiv="imagetoolbar" content="no">
+  <script type="text/javascript" src="https://developer.mozilla.org/static/build/js/html5shiv.ae1ac46eaf58.js" charset="utf-8"></script>
+  <![endif]-->
+
+  
+  <link rel="dns-prefetch" href="https://interactive-examples.mdn.mozilla.net/" pr="0.75">
+  <link rel="preconnect" href="https://interactive-examples.mdn.mozilla.net/" pr="0.75">
+
+  <link rel="alternate" type="application/json" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$json">
+  <link rel="canonical" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch">
+
+  
+  <link rel="alternate" hreflang="pt-BR" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch" title="Usando Fetch">
+  
+    
+      <link rel="alternate" hreflang="en-US" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" title="Using Fetch">
+    
+      <link rel="alternate" hreflang="es" href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch" title="Utilizando Fetch">
+    
+      <link rel="alternate" hreflang="fr" href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch" title="Utiliser Fetch">
+    
+      <link rel="alternate" hreflang="it" href="https://developer.mozilla.org/it/docs/Web/API/Fetch_API/Using_Fetch" title="Using Fetch">
+    
+      <link rel="alternate" hreflang="ja" href="https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch" title="Fetch 概説">
+    
+      <link rel="alternate" hreflang="ko" href="https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Fetch%EC%9D%98_%EC%82%AC%EC%9A%A9%EB%B2%95" title="Using Fetch">
+    
+      <link rel="alternate" hreflang="ru" href="https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch" title="Использование Fetch">
+    
+      <link rel="alternate" hreflang="zh-CN" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch" title="使用 Fetch">
+    
+      <link rel="alternate" hreflang="zh-TW" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch" title="Using Fetch">
+    
+  
+
+  <!-- document-specific social tags -->
+  <meta property="og:title" content="Usando Fetch">
+  <meta property="og:url" content="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch">
+  <meta name="twitter:url" content="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch">
+  <meta name="twitter:title" content="Usando Fetch">
+  
+  <meta property="og:description" content="Este tipo de funcionalidade era alcançada anteriormente utilizando XMLHttpRequest. Fetch fornece uma alternativa melhor que pode ser facilmente utilizada por outras tecnologias como Service Workers. Fetch também provê um lugar lógico único para definir outros conceitos HTTP-relacionados como CORS e extensões ao HTTP.">
+  <meta name="description" content="Este tipo de funcionalidade era alcançada anteriormente utilizando XMLHttpRequest. Fetch fornece uma alternativa melhor que pode ser facilmente utilizada por outras tecnologias como Service Workers. Fetch também provê um lugar lógico único para definir outros conceitos HTTP-relacionados como CORS e extensões ao HTTP.">
+  <meta name="twitter:description" content="Este tipo de funcionalidade era alcançada anteriormente utilizando XMLHttpRequest. Fetch fornece uma alternativa melhor que pode ser facilmente utilizada por outras tecnologias como Service Workers. Fetch também provê um lugar lógico único para definir outros conceitos HTTP-relacionados como CORS e extensões ao HTTP.">
+  
+
+<script async="" data-manual="true" src="./Usando Fetch - Referência da API Web _ MDN_files/syntax-prism.ec09deda1b0f.js"></script></head>
+<body data-slug="Web/API/Fetch_API/Using_Fetch" contextmenu="edit-history-menu" data-search-url="" class="document">
+
+  <script>
+    // make sure global mdn object exists
+    var mdn = window.mdn || {};
+
+    (function(win) {
+        'use strict';
+
+        (function(){
+  var FLAGS = {
+    'kumaediting': false,'page_move': false,'section_edit': false,'spam_checks_enabled': true,'spam_submissions_enabled': false,'spam_admin_override': false,'spam_spammer_override': false,'spam_testing_mode': false,'sg_task_completion': false
+    },
+    SWITCHES = {
+    'welcome_email': true,'application_ACAO': true,'store_revision_ips': true,'foundation_callout': false,'helpful-survey-2': true,'wiki_spam_training': true,'registration_disabled': false
+    },
+    SAMPLES = {
+    
+    };
+  window.waffle = {
+    "flag_is_active": function waffle_flag(flag_name) {
+      
+      return !!FLAGS[flag_name];
+    },
+    "switch_is_active": function waffle_switch(switch_name) {
+      
+      return !!SWITCHES[switch_name];
+    },
+    "sample_is_active": function waffle_sample(sample_name) {
+      
+      return !!SAMPLES[sample_name];
+    },
+    "FLAGS": FLAGS,
+    "SWITCHES": SWITCHES,
+    "SAMPLES": SAMPLES
+  };
+})();
+
+
+        // This needs to be set before ckeditor.js loads
+        window.CKEDITOR_BASEPATH = '/static/js/libs/ckeditor/build/ckeditor/';
+
+        // Site configuration
+        win.mdn.ckeditor = {};
+        win.mdn.features = {};
+        win.mdn.siteUrl = '';
+        win.mdn.staticPath = 'https://developer.mozilla.org/static/';
+        win.mdn.wiki = {
+            autosuggestTitleUrl: '/pt-BR/docs/get-documents'
+        };
+        win.mdn.assets = {
+            css: {
+                'editor-content': ['https://developer.mozilla.org/static/build/styles/editor-content.5c6a5de0ae7d.css','https://developer.mozilla.org/static/build/styles/editor-locale-pt-BR.ca0bca387b42.css',
+                ],
+
+                'wiki-compat-tables': ['https://developer.mozilla.org/static/build/styles/wiki-compat-tables.481447ac27b5.css',]
+            },
+            js: {
+                'syntax-prism': ['https://developer.mozilla.org/static/build/js/syntax-prism.ec09deda1b0f.js',],
+                'wiki-compat-tables': ['https://developer.mozilla.org/static/build/js/wiki-compat-tables.b9b022726348.js',]
+            }
+        };
+
+        win.mdn.notifications = [];
+
+        
+
+        // interactive editor config
+        win.mdn.interactiveEditor = {
+            siteUrl: "https://developer.mozilla.org",
+            editorUrl: "https://interactive-examples.mdn.mozilla.net"
+        };
+        win.mdn.langCookieName = "django_language";
+
+    })(this);
+</script>
+    
+    <ul id="nav-access">
+  <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#content" id="skip-main">Pular para o conteúdo principal</a></li>
+  <li><a id="skip-language" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#language">Selecione o idioma</a></li>
+  <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#q" id="skip-search">Pular para a pesquisa</a></li>
+</ul>
+
+    <!-- Header -->
+    <header id="main-header" class="header-main">
+      <a href="https://developer.mozilla.org/pt-BR/" class="logo">MDN Web Docs</a>
+      <div class="nav-toolbox-wrapper">
+        <nav id="main-nav" class="nav-main" role="navigation">
+    <ul>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/pt-BR/docs/Web">Tecnologias
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28">
+    <path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"></path>
+</svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-tech-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML">HTML</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/CSS">CSS</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript">JavaScript</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Guide/Graphics">Gráficos</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP">HTTP</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API">APIs / DOM</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Mozilla/Add-ons/WebExtensions">WebExtensions</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/MathML">MathML</a></li>
+                  </ul>
+                </div>
+            </div>
+        </li>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/pt-BR/docs/Learn">Referências e Guias
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28">
+    <path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"></path>
+</svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-learn-submenu">
+                <div class="submenu-column">
+                  <ul>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn">Aprenda desenvolvimento web</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Tutorials">Tutoriais</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Reference">Referências</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Guide">Guias para desenvolvedores</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/Accessibility">Acessibilidade</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Games">Desenvolvimento de jogos</a></li>
+                    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web">...mais documentos</a></li>
+                  </ul>
+                </div>
+            <button type="button" class="submenu-close transparent"><span class="offscreen">Fechar o submenu</span><svg class="icon icon-close" version="1.1" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true"><path d="M20.281 20.656c0 0.391-0.156 0.781-0.438 1.062l-2.125 2.125c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-4.594-4.594-4.594 4.594c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-2.125-2.125c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l4.594-4.594-4.594-4.594c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.594 4.594-4.594c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062s-0.156 0.781-0.438 1.062l-4.594 4.594 4.594 4.594c0.281 0.281 0.438 0.672 0.438 1.062z"></path></svg></button></div>
+        </li>
+        <li class="nav-main-item">
+            <a href="https://developer.mozilla.org/pt-BR/docs/MDN/Feedback">Feedback
+                <svg class="icon icon-caret-down" xmlns="http://www.w3.org/2000/svg" width="16" height="28" viewBox="0 0 16 28">
+    <path d="M16 11a.99.99 0 0 1-.297.703l-7 7C8.516 18.89 8.265 19 8 19s-.516-.109-.703-.297l-7-7A.996.996 0 0 1 0 11c0-.547.453-1 1-1h14c.547 0 1 .453 1 1z"></path>
+</svg>
+            </a>
+            <div class="submenu js-submenu" id="nav-contact-submenu" aria-hidden="true" style="z-index: 99998;">
+              <div class="submenu-column">
+                <ul>
+                  <li>
+                      <a href="https://support.mozilla.org/">Obter ajuda do Firefox
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"></path>
+</svg>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="https://stackoverflow.com/">Obter ajuda de desenvolvimento web
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"></path>
+</svg>
+                      </a>
+                  </li>
+                </ul>
+                <ul>
+                  <li>
+                      <a href="https://developer.mozilla.org/pt-BR/docs/MDN/Community">Junte-se à comunidade MDN</a>
+                  </li>
+                  <li>
+                      <a target="_blank" href="https://bugzilla.mozilla.org/form.doc?bug_file_loc=https%3A//developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch">Relatar um problema de conteúdo
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"></path>
+</svg>
+                      </a>
+                  </li>
+                  <li>
+                      <a target="_blank" href="https://bugzilla.mozilla.org/form.mdn">Relatar um bug
+                          <svg class="icon icon-external-link" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
+    <path d="M22 14.5v5c0 2.484-2.016 4.5-4.5 4.5h-13A4.502 4.502 0 0 1 0 19.5v-13C0 4.016 2.016 2 4.5 2h11c.281 0 .5.219.5.5v1c0 .281-.219.5-.5.5h-11A2.507 2.507 0 0 0 2 6.5v13C2 20.875 3.125 22 4.5 22h13c1.375 0 2.5-1.125 2.5-2.5v-5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zM28 1v8c0 .547-.453 1-1 1a.99.99 0 0 1-.703-.297l-2.75-2.75L13.36 17.14c-.094.094-.234.156-.359.156s-.266-.063-.359-.156l-1.781-1.781c-.094-.094-.156-.234-.156-.359s.063-.266.156-.359L21.048 4.454l-2.75-2.75a.996.996 0 0 1-.297-.703c0-.547.453-1 1-1h8c.547 0 1 .453 1 1z"></path>
+</svg>
+                      </a>
+                  </li>
+                </ul>
+              </div>
+          <button type="button" class="submenu-close transparent"><span class="offscreen">Fechar o submenu</span><svg class="icon icon-close" version="1.1" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true"><path d="M20.281 20.656c0 0.391-0.156 0.781-0.438 1.062l-2.125 2.125c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-4.594-4.594-4.594 4.594c-0.281 0.281-0.672 0.438-1.062 0.438s-0.781-0.156-1.062-0.438l-2.125-2.125c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l4.594-4.594-4.594-4.594c-0.281-0.281-0.438-0.672-0.438-1.062s0.156-0.781 0.438-1.062l2.125-2.125c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l4.594 4.594 4.594-4.594c0.281-0.281 0.672-0.438 1.062-0.438s0.781 0.156 1.062 0.438l2.125 2.125c0.281 0.281 0.438 0.672 0.438 1.062s-0.156 0.781-0.438 1.062l-4.594 4.594 4.594 4.594c0.281 0.281 0.438 0.672 0.438 1.062z"></path></svg></button></div>
+      </li>
+  </ul>
+</nav>
+        <div id="toolbox" class="toolbox">
+  <ul>
+    
+    <li class="nav-login"><div class="login">
+    
+        
+        <a href="https://developer.mozilla.org/users/github/login/?next=%2Fpt-BR%2Fdocs%2FWeb%2FAPI%2FFetch_API%2FUsing_Fetch" class="login-link js-login-link" data-service="GitHub" rel="nofollow">
+            Entrar<svg class="icon icon-github" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28">
+    <title>Github</title>
+    <path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-.609.109-.828-.266-.828-.578 0-.391.016-1.687.016-3.297 0-1.125-.375-1.844-.812-2.219 2.672-.297 5.484-1.313 5.484-5.922 0-1.313-.469-2.375-1.234-3.219.125-.313.531-1.531-.125-3.187-1-.313-3.297 1.234-3.297 1.234a11.28 11.28 0 0 0-6 0S6.704 6.656 5.704 6.969c-.656 1.656-.25 2.875-.125 3.187-.766.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-.344.313-.656.844-.766 1.609-.688.313-2.438.844-3.484-1-.656-1.141-1.844-1.234-1.844-1.234-1.172-.016-.078.734-.078.734.781.359 1.328 1.75 1.328 1.75.703 2.141 4.047 1.422 4.047 1.422 0 1 .016 1.937.016 2.234 0 .313-.219.688-.828.578C3.439 23.796.002 19.296.002 13.999c0-6.625 5.375-12 12-12zM4.547 19.234c.031-.063-.016-.141-.109-.187-.094-.031-.172-.016-.203.031-.031.063.016.141.109.187.078.047.172.031.203-.031zm.484.532c.063-.047.047-.156-.031-.25-.078-.078-.187-.109-.25-.047-.063.047-.047.156.031.25.078.078.187.109.25.047zm.469.703c.078-.063.078-.187 0-.297-.063-.109-.187-.156-.266-.094-.078.047-.078.172 0 .281s.203.156.266.109zm.656.656c.063-.063.031-.203-.063-.297-.109-.109-.25-.125-.313-.047-.078.063-.047.203.063.297.109.109.25.125.313.047zm.891.391c.031-.094-.063-.203-.203-.25-.125-.031-.266.016-.297.109s.063.203.203.234c.125.047.266 0 .297-.094zm.984.078c0-.109-.125-.187-.266-.172-.141 0-.25.078-.25.172 0 .109.109.187.266.172.141 0 .25-.078.25-.172zm.906-.156c-.016-.094-.141-.156-.281-.141-.141.031-.234.125-.219.234.016.094.141.156.281.125s.234-.125.219-.219z"></path>
+</svg>
+        </a>
+    
+</div></li>
+  </ul>
+</div>
+      </div>
+      <form id="nav-main-search" action="https://developer.mozilla.org/pt-BR/search" method="get" role="search" class="nav-main-search">
+  <div class="search-wrap">
+    <label for="main-q" class="offscreen">Pesquisar</label>
+    <input type="search" id="main-q" name="q" placeholder="Pesquisar" data-value="" value="" aria-hidden="true">
+    <span class="search-trigger">
+        <svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" width="26" height="28" viewBox="0 0 26 28" aria-hidden="true">
+    <path d="M18 13c0-3.859-3.141-7-7-7s-7 3.141-7 7 3.141 7 7 7 7-3.141 7-7zm8 13c0 1.094-.906 2-2 2a1.96 1.96 0 0 1-1.406-.594l-5.359-5.344a10.971 10.971 0 0 1-6.234 1.937c-6.078 0-11-4.922-11-11s4.922-11 11-11 11 4.922 11 11c0 2.219-.672 4.406-1.937 6.234l5.359 5.359c.359.359.578.875.578 1.406z"></path>
+</svg>
+    </span>
+    <button type="submit" class="offscreen">Pesquisar</button>
+    <button type="button" id="close-header-search" class="close-header-search transparent">
+        <span class="offscreen">Fechar a pesquisa</span>
+        <svg class="icon icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true">
+    <path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"></path>
+</svg>
+    </button>
+  </div>
+</form>
+    </header> 
+
+  <!-- Content will go here -->
+  <main id="content" role="main">
+      
+  <!-- heading -->
+  <div id="wiki-document-head" class="document-head">
+    <div class="center">
+      <!-- action buttons -->
+      <div class="document-actions">
+        
+
+  
+    
+    
+  
+
+  
+    
+  
+
+  
+
+  <ul class="page-buttons">
+      <li>
+          <button id="languages-menu" class="transparent" aria-haspopup="true" aria-owns="languages-menu-submenu" aria-expanded="false">
+              <svg class="icon icon-language" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M10.219 16.844c-.031.109-.797-.25-1-.328-.203-.094-1.125-.609-1.359-.766s-1.125-.891-1.234-.938a28.275 28.275 0 0 1-2.094 2.828c-.281.328-1.125 1.391-1.641 1.719-.078.047-.531.094-.594.063.25-.187.969-1.078 1.281-1.437.391-.453 2.25-3.047 2.562-3.641.328-.594 1.312-2.562 1.359-2.75-.156-.016-1.391.406-1.719.516-.313.094-1.172.297-1.234.344-.063.063-.016.25-.047.313s-.313.203-.484.234a1.647 1.647 0 0 1-.734 0c-.203-.047-.391-.25-.438-.328 0 0-.063-.094-.078-.359.187-.063.5-.078.844-.172s1.188-.344 1.641-.5 1.328-.484 1.594-.547c.281-.047.984-.516 1.359-.641s.641-.281.656-.203 0 .422-.016.516c-.016.078-.766 1.547-.875 1.781-.063.125-.5.953-1.203 2.047.25.109.781.328 1 .438.266.125 2.125.906 2.219.938s.266.75.234.875zM7.016 9.25c.047.266-.031.375-.063.438-.156.297-.547.5-.781.594s-.625.187-.938.187c-.141-.016-.422-.063-.766-.406-.187-.203-.328-.75-.266-.688s.516.125.719.078.688-.187.906-.25c.234-.078.703-.203.859-.219.156 0 .281.063.328.266zm10.906 2.016l.984 3.547-2.172-.656zM.609 23.766l10.844-3.625V4.016L.609 7.657v16.109zM20 18.813l1.594.484-2.828-10.266-1.563-.484-3.375 8.375 1.594.484.703-1.719 3.297 1.016zM12.141 3.781l8.953 2.875V.718zM17 24.453l2.469.203-.844 2.5L18 26.125c-1.266.812-2.828 1.437-4.312 1.687-.453.094-.969.187-1.422.187h-1.313c-1.656 0-4.672-.984-5.984-1.937-.094-.078-.125-.141-.125-.25 0-.172.125-.297.281-.297.141 0 .875.453 1.078.547 1.406.703 3.375 1.344 4.953 1.344 1.953 0 3.281-.25 5.063-1.016.516-.234.969-.531 1.453-.797zm7-16.859v16.859c-12.078-3.844-12.094-3.844-12.094-3.844C11.656 20.718.453 24.5.297 24.5a.3.3 0 0 1-.281-.203c0-.016-.016-.031-.016-.047V7.406c.016-.047.031-.125.063-.156.094-.109.219-.141.313-.172.047-.016 1-.328 2.328-.781v-6l8.719 3.094C11.532 3.36 21.251 0 21.392 0c.172 0 .313.125.313.328v6.531z"></path>
+</svg>
+              <span>Idiomas</span>
+          </button>
+
+        <div class="submenu js-submenu" id="languages-menu-submenu">
+          <div class="submenu-column">
+            <ul id="translations">
+              
+                
+                
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" data-locale="en-US" title="Inglês (EUA)">English (US) (en-US)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch" data-locale="es" title="Espanhol">Español (es)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/fr/docs/Web/API/Fetch_API/Using_Fetch" data-locale="fr" title="Francês">Français (fr)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/it/docs/Web/API/Fetch_API/Using_Fetch" data-locale="it" title="Italiano">Italiano (it)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch" data-locale="ja" title="Japonês">日本語 (ja)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ko/docs/Web/API/Fetch_API/Fetch%EC%9D%98_%EC%82%AC%EC%9A%A9%EB%B2%95" data-locale="ko" title="Coreano">한국어 (ko)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch" data-locale="ru" title="Russo">Русский (ru)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch" data-locale="zh-CN" title="Chinês (Simplificado)">中文 (简体) (zh-CN)</a></bdi></li>
+                
+                  <li><bdi><a rel="internal" href="https://developer.mozilla.org/zh-TW/docs/Web/API/Fetch_API/Using_Fetch" data-locale="zh-TW" title="Chinês (Tradicional)">正體中文 (繁體) (zh-TW)</a></bdi></li>
+                
+              
+
+              
+            </ul>
+          </div>
+        </div>
+      </li>
+      
+      <li class="page-buttons-edit">
+          <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$edit" class="button neutral" id="edit-button" rel="nofollow">
+              <svg class="icon icon-pencil" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M5.672 24l1.422-1.422-3.672-3.672L2 20.328V22h2v2h1.672zm8.172-14.5a.329.329 0 0 0-.344-.344.368.368 0 0 0-.266.109l-8.469 8.469a.366.366 0 0 0-.109.266c0 .203.141.344.344.344a.368.368 0 0 0 .266-.109l8.469-8.469a.366.366 0 0 0 .109-.266zM13 6.5l6.5 6.5-13 13H0v-6.5zM23.672 8c0 .531-.219 1.047-.578 1.406L20.5 12 14 5.5l2.594-2.578c.359-.375.875-.594 1.406-.594s1.047.219 1.422.594l3.672 3.656c.359.375.578.891.578 1.422z"></path>
+</svg>
+              Editar
+          </a>
+      </li>
+      
+
+        
+
+        <li class="page-buttons-advanced">
+            <button id="advanced-menu" class="only-icon" aria-haspopup="true" aria-owns="advanced-menu-submenu" aria-expanded="false">
+                <svg class="icon icon-gear" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm8-1.703v3.469c0 .234-.187.516-.438.562l-2.891.438a8.86 8.86 0 0 1-.609 1.422c.531.766 1.094 1.453 1.672 2.156.094.109.156.25.156.391s-.047.25-.141.359c-.375.5-2.484 2.797-3.016 2.797a.795.795 0 0 1-.406-.141l-2.156-1.687a9.449 9.449 0 0 1-1.422.594c-.109.953-.203 1.969-.453 2.906a.573.573 0 0 1-.562.438h-3.469c-.281 0-.531-.203-.562-.469l-.438-2.875a9.194 9.194 0 0 1-1.406-.578l-2.203 1.672c-.109.094-.25.141-.391.141s-.281-.063-.391-.172c-.828-.75-1.922-1.719-2.578-2.625a.607.607 0 0 1 .016-.718c.531-.719 1.109-1.406 1.641-2.141a8.324 8.324 0 0 1-.641-1.547l-2.859-.422A.57.57 0 0 1 0 15.705v-3.469c0-.234.187-.516.422-.562l2.906-.438c.156-.5.359-.969.609-1.437a37.64 37.64 0 0 0-1.672-2.156c-.094-.109-.156-.234-.156-.375s.063-.25.141-.359c.375-.516 2.484-2.797 3.016-2.797.141 0 .281.063.406.156L7.828 5.94a9.449 9.449 0 0 1 1.422-.594c.109-.953.203-1.969.453-2.906a.573.573 0 0 1 .562-.438h3.469c.281 0 .531.203.562.469l.438 2.875c.484.156.953.344 1.406.578l2.219-1.672c.094-.094.234-.141.375-.141s.281.063.391.156c.828.766 1.922 1.734 2.578 2.656a.534.534 0 0 1 .109.344c0 .141-.047.25-.125.359-.531.719-1.109 1.406-1.641 2.141.266.5.484 1.016.641 1.531l2.859.438a.57.57 0 0 1 .453.562z"></path>
+</svg>
+                <span>Avançado</span>
+            </button>
+            <div class="submenu js-submenu" id="advanced-menu-submenu">
+                <!-- this page -->
+                <div class="submenu-column">
+                    <div class="title">Avançado</div>
+                    <ul>
+                        <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$history" rel="nofollow">Histórico</a></li>
+                        
+                        
+                        
+
+
+                
+
+                <li class="page-print"><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#" onclick="return window.print();">Imprimir este artigo</a></li>
+            </ul>
+          </div>
+        </div>
+  </li></ul>
+      </div>
+
+      <div class="document-title">
+        <h1>Usando Fetch</h1>
+      </div>
+    </div>
+  </div>
+  
+  <div id="toc" class="toc">
+    <div class="center">
+      <div class="toc-head">Ir para:</div>
+        <ol class="toc-links">
+          <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Situa%C3%A7%C3%A3o_do_suporte_por_navegadores" rel="internal">Situação do suporte por navegadores</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Feature_detection" rel="internal">Feature detection</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Making_fetch_requests" rel="internal">Making fetch requests</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Headers" rel="internal">Headers</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Response_objects" rel="internal">Response objects</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Body" rel="internal">Body</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Specifications" rel="internal">Specifications</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Browser_compatibility" rel="internal">Browser compatibility</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#See_also" rel="internal">See also</a>
+        </li></ol>
+    </div>
+  </div>
+  
+
+      <div class="center clear">
+      
+
+    <div class="wiki-main-content" id="document-main"><div class="center">
+      <!-- start the main content container -->
+        <div id="wiki-column-container" class="wiki-left-present">
+
+          <!-- content row with three strips -->
+          <div class="column-container column-container-reverse">
+
+            <!-- center: main article content -->
+            <div id="wiki-content" class="column-main wiki-column text-content">
+
+              
+
+              
+              
+
+              
+
+              
+                
+                  
+                    <div class="overheadIndicator translationInProgress"><p>Esta tradução está incompleta. Por favor, ajude a <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$edit">traduzir este artigo</a>.</p></div>
+                  
+                
+              
+              
+
+              <!-- just the article content -->
+              <article id="wikiArticle">
+                
+                  
+                    <p></p><div class="notice experimental">
+    <p><span title="This is an experimental API that should not be used in production code."><i class="icon-beaker"> </i></span> <strong>This is an <a href="https://developer.mozilla.org/en-US/docs/MDN/Contribute/Guidelines/Conventions_definitions#Experimental">experimental technology</a></strong><br>Check the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Browser_compatibility">Browser compatibility table</a> carefully before using this in production.</p>
+</div><p></p>
+
+<div class="summary">
+<p>A <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API">API Fetch</a>&nbsp;fornece uma&nbsp;interface JavaScript para accessar e manipular&nbsp;partes do pipeline HTTP, tais como os pedidos e respostas. Ele também fornece o método global&nbsp;<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/GlobalFetch/fetch" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>fetch()</code></a> que fornece uma maneira fácil e lógica&nbsp;para buscar recursos de forma assíncrona através da rede.</p>
+</div>
+
+<p>Este tipo de funcionalidade era alcançada&nbsp;anteriormente utilizando <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest" title="XMLHttpRequest é uma API que fornece funcionalidade ao cliente para transferir dados entre um cliente e um servidor. Ele fornece uma maneira fácil de recuperar dados de um URL sem ter que fazer uma atualização de página inteira. Isso permite que uma página da Web atualize apenas uma parte do conteúdo sem interromper o que o usuário esteja fazendo. XMLHttpRequest é usado constantemente na programação de AJAX."><code>XMLHttpRequest</code></a>.&nbsp;Fetch fornece uma alternativa melhor que pode ser facilmente utilizada por outras tecnologias como&nbsp;<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/ServiceWorker_API" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Service Workers</code></a>. Fetch também provê um lugar lógico único para definir outros conceitos HTTP-relacionados como&nbsp;CORS e extensões ao HTTP.</p>
+
+<p>Note que a especificação&nbsp;<code>fetch()</code>&nbsp;difere de&nbsp;<code>jQuery.ajax()</code>, principalmente, tendo em mente duas situações:</p>
+
+<ul>
+ <li><font><font>A Promise retornada do&nbsp;</font></font><code>fetch()</code>&nbsp;<strong><font><font>não rejeitará o status do erro HTTP,</font></font></strong><font><font>&nbsp;mesmo que a resposta seja um HTTP 404 ou 500. Em vez disso, ele irá resolver normalmente (com o status&nbsp;</font></font><code>ok</code><font><font>&nbsp;definido como falso), e ele só irá rejeitar se houver&nbsp;falha na rede ou se alguma coisa impedir a requisição de ser completada.</font></font></li>
+ <li><font><font>Por padrão, o&nbsp;</font></font><code>fetch</code>&nbsp;<strong><font><font>não enviará nem receberá cookies</font></font></strong><font><font>&nbsp;do servidor, resultando em solicitações não autenticadas se o site depende do uso de uma sessão de usuário (para enviar cookies, a opção <em>credentials do&nbsp;</em>&nbsp;</font><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Par%C3%A2metros"><font>parâmetro&nbsp;init&nbsp;</font></a></font><font><font>deve ser definida).</font></font></li>
+</ul>
+
+<h2 id="Situação_do_suporte_por_navegadores"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Situa%C3%A7%C3%A3o_do_suporte_por_navegadores"><span>Link to section</span></a>Situação do suporte por navegadores</h2>
+
+<p>Os suportes para Fetch ainda estão&nbsp;em uma fase bastante precoce, mas começa a ter progresso. Se tornou um padrão no Firefox 39 e Chrome 42 até as versões mais atuais.</p>
+
+<p>Caso tenha interesse no uso da ferramenta, há também uma&nbsp;<a href="https://github.com/github/fetch" class="external external-icon" rel="noopener">Fetch Polyfill</a> disponivel que recria as funcionalidade para&nbsp;outros navegadores que ainda não o suporta. Fique ciente que está em estado experimental e ainda não há uma versão completa.</p>
+
+<div class="note">
+<p><strong>Note</strong>: There have been some concerns raised that the <a href="https://fetch.spec.whatwg.org/" class="external external-icon" rel="noopener">Fetch spec</a> is at odds with the <a href="https://streams.spec.whatwg.org/" class="external external-icon" rel="noopener">Streams spec</a>; however, future plans show an intention to integrate Streams with Fetch: read <a href="https://github.com/yutakahirano/fetch-with-streams/" class="external external-icon" rel="noopener">Fetch API integrated with Streams</a> for more information.</p>
+</div>
+
+<h2 id="Feature_detection"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Feature_detection"><span>Link to section</span></a>Feature detection</h2>
+
+<p>Fetch API support pode ser detectada na existência do&nbsp;escopo <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Headers" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Headers</code></a>, <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request" title="A interface Request da Fetch API representa uma requisição de recursos."><code>Request</code></a>, <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response</code></a> ou&nbsp;<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/GlobalFetch/fetch" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>fetch()</code></a> no <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Window" title="O objeto window representa uma janela que contém um elemento DOM; a propriedade document aponta para o documento DOM document carregado naquela janela."><code>Window</code></a> ou&nbsp;<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Worker" title="A interface Worker da API do Web Worker representa uma tarefa em background que pode ser facilmente criada e pode enviar mensagens de volta ao seu criador. Criar um worker é possível chamando o construtor Worker() e especificando um script para ser executado em sua thread."><code>Worker</code></a> . Por exemplo, faça o seguinte teste no seu código:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">if</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>fetch<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// run my fetch request here</span>
+<span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// do something with XMLHttpRequest?</span>
+<span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="Making_fetch_requests"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Making_fetch_requests"><span>Link to section</span></a>Making fetch requests</h2>
+
+<p>Uma requição fetch&nbsp;é realizada para configuração.&nbsp;Temos um exemplo no seguinte código:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> myImage <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'img'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'flowers.jpg'</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> objectURL <span class="token operator">=</span> URL<span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  myImage<span class="token punctuation">.</span>src <span class="token operator">=</span> objectURL<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Aqui estamos procurando uma imagem&nbsp;e inserindo em um elemento <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element/img" title="O elemento HTML &lt;img&gt;  (or HTML Image Element) representa a inseração de imagem no documento, sendo implementado também pelo HTML5 para uma melhor experiência com o elemento &lt;figure&gt; e &lt;figcaption&gt;."><code>&lt;img&gt;</code></a>. O uso mais básico do<code>fetch()</code>&nbsp;acarreta em um argumento&nbsp;— the path to the resource you want to fetch — and returns a promise containing the response (a <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response</code></a> object).</p>
+
+<p>This is just an HTTP response of course, not the actual image. To extract the image body content from the response, we use the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/blob" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>blob()</code></a> method (defined on the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Body</code></a> mixin, which is implemented by both the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request" title="A interface Request da Fetch API representa uma requisição de recursos."><code>Request</code></a> and <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response</code></a> objects.)</p>
+
+<div class="note">
+<p><strong>Note</strong>: The Body mixin also has similar methods to extract other types of body content; see the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Body">Body</a> section for more.</p>
+</div>
+
+<p>An <code>objectURL</code> is then created from the extracted <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Blob" title="Um Blob object representa um objeto, do tipo arquivo, com  dados brutos imutáveis. Blobs representam dados que não estão necessariamente em um formato JavaScript nativo. A interface File é baseada no Blob, herdando  funcionalidade blob e expandindo-o para suportar arquivos do sistema do usuário."><code>Blob</code></a>, which is then inserted into the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Img" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>img</code></a>.</p>
+
+<p>Fetch requests are controlled by the <code>connect-src</code> directive of <a href="https://developer.mozilla.org/en-US/docs/Security/CSP/CSP_policy_directives">Content Security Policy</a> rather than the directive of the resources it's retrieving.</p>
+
+<h3 id="Supplying_request_options" class="highlight-spanned"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Supplying_request_options"><span>Link to section</span></a><span class="highlight-span">Supplying request options</span></h3>
+
+<p>The <code>fetch()</code> method can optionally accept a second parameter, an <code>init</code> object that allows you to control a number of different settings:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> myHeaders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> myInit <span class="token operator">=</span> <span class="token punctuation">{</span> method<span class="token punctuation">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span>
+               headers<span class="token punctuation">:</span> myHeaders<span class="token punctuation">,</span>
+               mode<span class="token punctuation">:</span> <span class="token string">'cors'</span><span class="token punctuation">,</span>
+               cache<span class="token punctuation">:</span> <span class="token string">'default'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'flowers.jpg'</span><span class="token punctuation">,</span>myInit<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> objectURL <span class="token operator">=</span> URL<span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  myImage<span class="token punctuation">.</span>src <span class="token operator">=</span> objectURL<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>See <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/GlobalFetch/fetch" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>fetch()</code></a> for the full options available, and more descriptions.</p>
+
+<h3 id="Checking_that_the_fetch_was_successful" class="highlight-spanned"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Checking_that_the_fetch_was_successful"><span>Link to section</span></a><span class="highlight-span">Checking that the fetch was successful</span></h3>
+
+<p>A <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/GlobalFetch/fetch" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>fetch()</code></a> promise will reject with a <a href="https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/TypeError" title="O  objeto TypeError  representa um erro de quando um valor não é do tipo esperado."><code>TypeError</code></a> when a network error is encountered, although this usually means permission issues or similar — a 404 does not constitute a network error, for example. An accurate check for a successful <code>fetch()</code> would include checking that the promise resolved, then checking that the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/ok" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response.ok</code></a> property has a value of true. The code would look something like this:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">'flowers.jpg'</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span>ok<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    response<span class="token punctuation">.</span><span class="token function">blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token keyword">var</span> objectURL <span class="token operator">=</span> URL<span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      myImage<span class="token punctuation">.</span>src <span class="token operator">=</span> objectURL<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Network response was not ok.'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>error<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'There has been a problem with your fetch operation: '</span> <span class="token operator">+</span> error<span class="token punctuation">.</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Supplying_your_own_request_object" class="highlight-spanned"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Supplying_your_own_request_object"><span>Link to section</span></a><span class="highlight-span">Supplying your own request object</span></h3>
+
+<p>Instead of passing a path to the resource you want to request into the <code>fetch()</code> call, you can create a request object using the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request/Request" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Request()</code></a> constructor, and pass that in as a <code>fetch()</code> method argument:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> myHeaders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> myInit <span class="token operator">=</span> <span class="token punctuation">{</span> method<span class="token punctuation">:</span> <span class="token string">'GET'</span><span class="token punctuation">,</span>
+               headers<span class="token punctuation">:</span> myHeaders<span class="token punctuation">,</span>
+               mode<span class="token punctuation">:</span> <span class="token string">'cors'</span><span class="token punctuation">,</span>
+               cache<span class="token punctuation">:</span> <span class="token string">'default'</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">var</span> myRequest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Request</span><span class="token punctuation">(</span><span class="token string">'flowers.jpg'</span><span class="token punctuation">,</span> myInit<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">fetch</span><span class="token punctuation">(</span>myRequest<span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+<span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> objectURL <span class="token operator">=</span> URL<span class="token punctuation">.</span><span class="token function">createObjectURL</span><span class="token punctuation">(</span>myBlob<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  myImage<span class="token punctuation">.</span>src <span class="token operator">=</span> objectURL<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><code>Request()</code> accepts exactly the same parameters as the <code>fetch()</code> method. You can even pass in an existing request object to create a copy of it:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> anotherRequest <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Request</span><span class="token punctuation">(</span>myRequest<span class="token punctuation">,</span>myInit<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>This is pretty useful, as request and response bodies are one use only. Making a copy like this allows you to make use of the request/response again, while varying the <code>init</code> options if desired.</p>
+
+<div class="note">
+<p><strong>Note</strong>: There is also a <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request/clone" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>clone()</code></a> method that creates a copy. This has slightly different semantics to the other copying method — the former will fail if the old request's body has already been read (same for copying a response), whereas <code>clone()</code> won't.</p>
+</div>
+
+<h2 id="Headers"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Headers"><span>Link to section</span></a>Headers</h2>
+
+<p>The <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Headers" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Headers</code></a> interface allows you to create your own headers object via the <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Headers/Headers" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Headers()</code></a> constructor. A headers object is a simple multi-map of names to values:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> content <span class="token operator">=</span> <span class="token string">"Hello World"</span><span class="token punctuation">;</span>
+<span class="token keyword">var</span> myHeaders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Headers</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+myHeaders<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"text/plain"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+myHeaders<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"Content-Length"</span><span class="token punctuation">,</span> content<span class="token punctuation">.</span>length<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+myHeaders<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"X-Custom-Header"</span><span class="token punctuation">,</span> <span class="token string">"ProcessThisImmediately"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>The same can be achieved by passing an array of arrays or an object literal to the constructor:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js">myHeaders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Headers</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+  <span class="token string">"Content-Type"</span><span class="token punctuation">:</span> <span class="token string">"text/plain"</span><span class="token punctuation">,</span>
+  <span class="token string">"Content-Length"</span><span class="token punctuation">:</span> content<span class="token punctuation">.</span>length<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token string">"X-Custom-Header"</span><span class="token punctuation">:</span> <span class="token string">"ProcessThisImmediately"</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>The contents can be queried and retrieved:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js">console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myHeaders<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// true</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myHeaders<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span><span class="token string">"Set-Cookie"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// false</span>
+myHeaders<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">"Content-Type"</span><span class="token punctuation">,</span> <span class="token string">"text/html"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+myHeaders<span class="token punctuation">.</span><span class="token function">append</span><span class="token punctuation">(</span><span class="token string">"X-Custom-Header"</span><span class="token punctuation">,</span> <span class="token string">"AnotherValue"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myHeaders<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">"Content-Length"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 11</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myHeaders<span class="token punctuation">.</span><span class="token function">getAll</span><span class="token punctuation">(</span><span class="token string">"X-Custom-Header"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// ["ProcessThisImmediately", "AnotherValue"]</span>
+ 
+myHeaders<span class="token punctuation">.</span><span class="token keyword">delete</span><span class="token punctuation">(</span><span class="token string">"X-Custom-Header"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>myHeaders<span class="token punctuation">.</span><span class="token function">getAll</span><span class="token punctuation">(</span><span class="token string">"X-Custom-Header"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// [ ]</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Some of these operations are only useful in <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/ServiceWorker_API" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>ServiceWorkers</code></a>, but they provide a much nicer API for manipulating headers.</p>
+
+<p>All of the Headers methods throw a TypeError if a header name is used that is not a valid HTTP Header name. The mutation operations will throw a TypeError if there is an immutable guard (see below). Otherwise they fail silently. For example:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> myResponse <span class="token operator">=</span> Response<span class="token punctuation">.</span><span class="token function">error</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">try</span> <span class="token punctuation">{</span>
+  myResponse<span class="token punctuation">.</span>headers<span class="token punctuation">.</span><span class="token keyword">set</span><span class="token punctuation">(</span><span class="token string">"Origin"</span><span class="token punctuation">,</span> <span class="token string">"http://mybank.com"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span>e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Cannot pretend to be a bank!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>A good use case for headers is checking whether the content type is correct before you process it further. For example:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token function">fetch</span><span class="token punctuation">(</span>myRequest<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">var</span> contentType <span class="token operator">=</span> response<span class="token punctuation">.</span>headers<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">"content-type"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>contentType <span class="token operator">&amp;&amp;</span> contentType<span class="token punctuation">.</span><span class="token function">indexOf</span><span class="token punctuation">(</span><span class="token string">"application/json"</span><span class="token punctuation">)</span> <span class="token operator">!==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> response<span class="token punctuation">.</span><span class="token function">json</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span>json<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token comment" spellcheck="true">// process your JSON further</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">"Oops, we haven't got JSON!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Guard" class="highlight-spanned"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Guard"><span>Link to section</span></a><span class="highlight-span">Guard</span></h3>
+
+<p>Since headers can be sent in requests and received in responses, and have various limitations about what information can and should be mutable, headers objects have a guard property. This is not exposed to the Web, but it affects which mutation operations are allowed on the headers object.</p>
+
+<p>Possible guard values are:</p>
+
+<ul>
+ <li><code>none</code>: default.</li>
+ <li><code>request</code>: guard for a headers object obtained from a request (<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request/headers" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Request.headers</code></a>).</li>
+ <li><code>request-no-cors</code>: guard for a headers object obtained from a request created with <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request/mode" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Request.mode</code></a> <code>no-cors</code>.</li>
+ <li><code>response</code>: guard for a Headers obtained from a response (<a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/headers" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response.headers</code></a>).</li>
+ <li><code>immutable</code>: Mostly used for ServiceWorkers; renders a headers object read-only.</li>
+</ul>
+
+<div class="note">
+<p><strong>Note</strong>: You may not append or set a <code>request</code> guarded Headers’ <code>Content-Length</code> header. Similarly, inserting <code>Set-Cookie</code> into a response header is not allowed: ServiceWorkers are not allowed to set cookies via synthesized responses.</p>
+</div>
+
+<h2 id="Response_objects"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Response_objects"><span>Link to section</span></a>Response objects</h2>
+
+<p>As you have seen above, <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response</code></a> instances are returned when <code>fetch()</code> promises are resolved.</p>
+
+<p>They can also be created programmatically via JavaScript, but this is only really useful in <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/ServiceWorker_API" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>ServiceWorkers</code></a>, when you are providing a custom response to a received request using a <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/FetchEvent/respondWith" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>respondWith()</code></a> method:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> myBody <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Blob</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">addEventListener</span><span class="token punctuation">(</span><span class="token string">'fetch'</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>event<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  event<span class="token punctuation">.</span><span class="token function">respondWith</span><span class="token punctuation">(</span>
+    <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span>myBody<span class="token punctuation">,</span> <span class="token punctuation">{</span>
+      headers<span class="token punctuation">:</span> <span class="token punctuation">{</span> <span class="token string">"Content-Type"</span> <span class="token punctuation">:</span> <span class="token string">"text/plain"</span> <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>The <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response()</code></a> constructor takes two optional arguments — a body for the response, and an init object (similar to the one that <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request/Request" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Request()</code></a> accepts.)</p>
+
+<p>The most common response properties you'll use are:</p>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/status" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response.status</code></a> — An integer (default value 200) containing the response status code.</li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/statusText" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response.statusText</code></a> — A string (default value "OK"),which corresponds to the HTTP status code message.</li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/ok" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response.ok</code></a> — seen in use above, this is a shorthand for checking that status is in the range 200-299 inclusive. This returns a <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Boolean" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Boolean</code></a>.</li>
+</ul>
+
+<div class="note">
+<p><strong>Note</strong>: The static method <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/error" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>error()</code></a> simply returns an error response. Similarly, <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response/redirect" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>redirect()</code></a> returns a response resulting in<br>
+ a redirect to a specified URL. These are also only relevant to Service Workers.</p>
+</div>
+
+<h2 id="Body"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Body"><span>Link to section</span></a>Body</h2>
+
+<p>Both requests and responses may contain body data. A body is an instance of any of the following types.</p>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/ArrayBuffer" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!"><code>ArrayBuffer</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/ArrayBufferView" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>ArrayBufferView</code></a> (Uint8Array and friends)</li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Blob" title="Um Blob object representa um objeto, do tipo arquivo, com  dados brutos imutáveis. Blobs representam dados que não estão necessariamente em um formato JavaScript nativo. A interface File é baseada no Blob, herdando  funcionalidade blob e expandindo-o para suportar arquivos do sistema do usuário."><code>Blob</code></a>/File</li>
+ <li>string</li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/URLSearchParams" title="A interface URLSearchParams define métodos de utilização para trabalhar com query string de uma URL."><code>URLSearchParams</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/FormData" title="A interface FormData fornece uma maneira fácil de construir um conjunto de pares chave/valor representando campos de um elemento form e seus valores, os quais podem ser facilmente enviados utilizado o método send() do XMLHttpRequest. Essa interface utiliza o mesmo formato que um form utilizaria se o tipo de codificação estivesse configurado como &quot;multipart/form-data&quot;."><code>FormData</code></a></li>
+</ul>
+
+<p>The <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Body</code></a> mixin defines the following methods to extract a body (implemented by both <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request" title="A interface Request da Fetch API representa uma requisição de recursos."><code>Request</code></a> and <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>Response</code></a>). These all return a promise that is eventually resolved with the actual content.</p>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/arrayBuffer" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>arrayBuffer()</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/blob" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>blob()</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/json" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>json()</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/text" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>text()</code></a></li>
+ <li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body/formData" title="A documentação sobre isto ainda não foi escrita; por favor considere contribuir!" class="new" rel="nofollow"><code>formData()</code></a></li>
+</ul>
+
+<p>This makes usage of non-textual data much easier than it was with XHR.</p>
+
+<p>Request bodies can be set by passing body parameters:</p>
+
+<pre class="brush: js line-numbers  language-js"><code class=" language-js"><span class="token keyword">var</span> form <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FormData</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span><span class="token string">'login-form'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">fetch</span><span class="token punctuation">(</span><span class="token string">"/login"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+  method<span class="token punctuation">:</span> <span class="token string">"POST"</span><span class="token punctuation">,</span>
+  body<span class="token punctuation">:</span> form
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>Both request and response (and by extension the <code>fetch()</code> function), will try to intelligently determine the content type. A request will also automatically set a <code>Content-Type</code> header if none is set in the dictionary.</p>
+
+<h2 id="Specifications"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Specifications"><span>Link to section</span></a>Specifications</h2>
+
+<table class="standard-table">
+ <tbody>
+  <tr>
+   <th scope="col">Specification</th>
+   <th scope="col">Status</th>
+   <th scope="col">Comment</th>
+  </tr>
+  <tr>
+   <td><a rel="noopener" hreflang="en" href="https://fetch.spec.whatwg.org/" title="The &#39;Fetch&#39; specification" class="external external-icon" lang="en">Fetch</a></td>
+   <td><span class="spec-Living">Padrão em tempo real</span></td>
+   <td>Initial definition</td>
+  </tr>
+ </tbody>
+</table>
+
+<h2 id="Browser_compatibility"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#Browser_compatibility"><span>Link to section</span></a>Browser compatibility</h2>
+
+<p></p><p class="warning"><strong><a href="https://github.com/mdn/browser-compat-data" class="external external-icon" rel="noopener">We're converting our compatibility data into a machine-readable JSON format</a></strong>.
+            This compatibility table still uses the old format,
+            because we haven't yet converted the data it contains.
+            <strong><a href="https://developer.mozilla.org/pt-BR/docs/MDN/Contribute/Structures/Compatibility_tables" class="new" rel="nofollow">Find out how you can help!</a></strong></p>
+
+<div class="htab">
+    <a id="AutoCompatibilityTable" name="AutoCompatibilityTable"></a>
+    <ul>
+        <li class="selected"><a>Desktop</a></li>
+        <li><a>Mobile</a></li>
+    </ul>
+<div id="compat-desktop" style="display: block;">
+<table class="compat-table">
+ <tbody>
+  <tr>
+   <th>Feature</th>
+   <th>Chrome</th>
+   <th>Firefox (Gecko)</th>
+   <th>Internet Explorer</th>
+   <th>Opera</th>
+   <th>Safari (WebKit)</th>
+  </tr>
+  <tr>
+   <td>Basic support</td>
+   <td>42<br>
+    41 behind pref<br>
+    &nbsp;</td>
+   <td><a href="https://developer.mozilla.org/en-US/Firefox/Releases/39" title="Released on 2015-06-30.">39</a> (39)<br>
+    34 behind pref</td>
+   <td>
+    <p>&gt;11</p>
+
+    <p>Microsoft Edge &gt;38</p>
+   </td>
+   <td>
+    <p>29<br>
+     28 behind pref</p>
+   </td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+  </tr>
+ </tbody>
+</table>
+</div><div id="compat-mobile" style="display: none;">
+<table class="compat-table">
+ <tbody>
+  <tr>
+   <th>Feature</th>
+   <th>Android</th>
+   <th>Firefox Mobile (Gecko)</th>
+   <th>Firefox OS (Gecko)</th>
+   <th>IE Phone</th>
+   <th>Opera Mobile</th>
+   <th>Safari Mobile</th>
+   <th>Chrome for Android</th>
+  </tr>
+  <tr>
+   <td>Basic support</td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+   <td><span style="color: #f00;">Não suportado</span></td>
+  </tr>
+ </tbody>
+</table>
+</div></div><p></p>
+
+
+
+
+
+<h2 id="See_also"><a class="local-anchor" href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#See_also"><span>Link to section</span></a>See also</h2>
+
+<ul>
+ <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker_API">ServiceWorker API</a></li>
+ <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS">HTTP access control (CORS)</a></li>
+ <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP">HTTP</a></li>
+ <li><a href="https://github.com/github/fetch" class="external external-icon" rel="noopener">Fetch polyfill</a></li>
+ <li><a href="https://github.com/mdn/fetch-examples/" class="external external-icon" rel="noopener">Fetch examples on Github</a></li>
+</ul>
+                  
+                
+              </article>
+
+              <!-- contributors -->
+              <div class="wiki-block contributors">
+                <h2 class="offscreen">Etiquetas do documento e colaboradores</h2>
+                
+                
+
+                
+                  <div class="contributors-sub">
+                    <svg class="icon icon-group" xmlns="http://www.w3.org/2000/svg" width="30" height="28" viewBox="0 0 30 28" aria-hidden="true">
+    <path d="M9.266 14a5.532 5.532 0 0 0-4.141 2H3.031C1.468 16 0 15.25 0 13.516 0 12.25-.047 8 1.937 8c.328 0 1.953 1.328 4.062 1.328.719 0 1.406-.125 2.078-.359A7.624 7.624 0 0 0 7.999 10c0 1.422.453 2.828 1.266 4zM26 23.953C26 26.484 24.328 28 21.828 28H8.172C5.672 28 4 26.484 4 23.953 4 20.422 4.828 15 9.406 15c.531 0 2.469 2.172 5.594 2.172S20.063 15 20.594 15C25.172 15 26 20.422 26 23.953zM10 4c0 2.203-1.797 4-4 4S2 6.203 2 4s1.797-4 4-4 4 1.797 4 4zm11 6c0 3.313-2.688 6-6 6s-6-2.688-6-6 2.688-6 6-6 6 2.688 6 6zm9 3.516C30 15.25 28.531 16 26.969 16h-2.094a5.532 5.532 0 0 0-4.141-2A7.066 7.066 0 0 0 22 10a7.6 7.6 0 0 0-.078-1.031A6.258 6.258 0 0 0 24 9.328C26.109 9.328 27.734 8 28.062 8c1.984 0 1.937 4.25 1.937 5.516zM28 4c0 2.203-1.797 4-4 4s-4-1.797-4-4 1.797-4 4-4 4 1.797 4 4z"></path>
+</svg>
+                    <strong>Colaboradores desta página:</strong>
+                    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/claudemirmendes">claudemirmendes</a>, 
+    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/nelsonealves">nelsonealves</a>, 
+    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/dowgssss">dowgssss</a>, 
+    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/FranciscoJunior">FranciscoJunior</a>, 
+    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/DanZeuss">DanZeuss</a>, 
+    
+        <a href="https://developer.mozilla.org/pt-BR/profiles/rennerocha">rennerocha</a>
+    
+                  </div>
+                
+
+                
+                  <div class="contributors-sub">
+                    <svg class="icon icon-clock" xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28" aria-hidden="true">
+    <path d="M14 8.5v7c0 .281-.219.5-.5.5h-5a.494.494 0 0 1-.5-.5v-1c0-.281.219-.5.5-.5H12V8.5c0-.281.219-.5.5-.5h1c.281 0 .5.219.5.5zm6.5 5.5c0-4.688-3.813-8.5-8.5-8.5S3.5 9.313 3.5 14s3.813 8.5 8.5 8.5 8.5-3.813 8.5-8.5zm3.5 0c0 6.625-5.375 12-12 12S0 20.625 0 14 5.375 2 12 2s12 5.375 12 12z"></path>
+</svg>
+                    <strong>Última atualização por:</strong>
+                    <a href="https://developer.mozilla.org/pt-BR/profiles/claudemirmendes">claudemirmendes</a>,
+                    <time datetime="2018-05-03T10:55:48.087925-07:00">May 3, 2018, 10:55:48 AM</time>
+                  </div>
+                
+              </div>
+            </div>
+
+            
+              <!-- quick links and approvals strip -->
+              <div id="wiki-left" class="column-strip wiki-column">
+
+                <!-- crumbs -->
+                
+  
+    <nav class="crumbs" role="navigation">
+      <ol typeof="BreadcrumbList" vocab="https://schema.org/" aria-label="migalhas de pão">
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/pt-BR/docs/Web" property="item" typeof="WebPage">
+              <span property="name">Tecnologia web para desenvolvedores</span>
+            </a>
+            <meta property="position" content="1">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/pt-BR/docs/Web/API" property="item" typeof="WebPage">
+              <span property="name">Referência da API Web</span>
+            </a>
+            <meta property="position" content="2">
+          </li>
+        
+          <li property="itemListElement" typeof="ListItem" class="crumb">
+            <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API" property="item" typeof="WebPage">
+              <span property="name">Fetch API</span>
+            </a>
+            <meta property="position" content="3">
+          </li>
+        
+        <li property="itemListElement" typeof="ListItem" class="crumb">
+          <span property="name">Usando Fetch</span>
+        </li>
+      </ol>
+    </nav>
+  
+
+                
+                  <!-- quick links -->
+                  
+  <div class="quick-links" id="quick-links">
+    <div class="quick-links-head">Tópicos relacionados</div>
+    <ol><li><strong><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API">Fetch API</a></strong></li><li data-default-state="open" class="toggleable current" data-closed=""><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-down"></i><strong>Guias</strong></a><ol class="toggle-container" aria-expanded="true" style="display: block;"><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Cross-global_fetch_usage" title="This article explains an edge case that occurs with fetch (and potentially other APIs exhibiting the same kind of resource retrieval behavior). When a cross-origin fetch involving a relative URL is initiated from an &lt;iframe&gt;, the relative URL used to be resolved against the current global location, rather than the iframe&#39;s location." class="new" rel="nofollow">Cross-global fetch usage</a> <a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Cross-global_fetch_usage$translate" style="opacity: 0.5;" title="Nossos voluntários ainda não traduziram este artigo para sua linguagem. Junte-se a nós e nos ajude a traduzir!" class="new" rel="nofollow">[Traduzir]</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Basic_concepts" title="O coração do Fetch são as abstrações da Interface do HTTP Request, Response, Headers, e Body payloads, juntamente com global fetch método para iniciar requisições de recursos assíncronos. Como os componentes principais do HTTP são abstraidos como objetos de JavaScript, torna-se fácil APIs fazer uso das funcionalidades.">Conceitos básicos de Fetch</a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch" title="Este tipo de funcionalidade era alcançada anteriormente utilizando XMLHttpRequest. Fetch fornece uma alternativa melhor que pode ser facilmente utilizada por outras tecnologias como Service Workers. Fetch também provê um lugar lógico único para definir outros conceitos HTTP-relacionados como CORS e extensões ao HTTP.">Usando Fetch</a></li></ol></li><li data-default-state="open" class="toggleable current" data-closed=""><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-down"></i><strong>Interfaces</strong></a><ol class="toggle-container" aria-expanded="true" style="display: block;"><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Body" class="new" rel="nofollow"><code>Body</code></a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Headers" class="new" rel="nofollow"><code>Headers</code></a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Request"><code>Request</code></a></li><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Response" class="new" rel="nofollow"><code>Response</code></a></li></ol></li><li data-default-state="open" class="toggleable current" data-closed=""><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API/Using_Fetch#" class="toggler" aria-haspopup="true"><i aria-hidden="true" class="icon-caret-down"></i><strong>Métodos</strong></a><ol class="toggle-container" aria-expanded="true" style="display: block;"><li><a href="https://developer.mozilla.org/pt-BR/docs/Web/API/WindowOrWorkerGlobalScope/fetch"><code>Window<wbr>OrWorker<wbr>Global<wbr>Scope<wbr>.fetch()</code></a></li></ol></li></ol>
+  </div>
+                
+
+                <!-- approvals -->
+                
+
+              </div>
+            
+          </div>
+        </div>
+      </div>
+    </div> <!-- ends "main-content" -->
+
+    
+      <div class="newsletter-box">
+        <div class="newsletter">
+    <form id="newsletterForm" class="newsletter-form nodisable" name="newsletter-form" action="https://www.mozilla.org/en-US/newsletter/" method="post">
+        <div class="newsletter-head">
+            <h2 class="newsletter-teaser">Aprenda o melhor do desenvolvimento web</h2>
+            <p class="newsletter-description">Receba as novidades da MDN diretamente na sua caixa de entrada.</p>
+            
+            <p class="newsletter-lang">O boletim informativo só é oferecido em Inglês no momento.</p>
+            
+        </div>
+
+        <div class="newsletter-fields">
+            <input type="hidden" id="fmt" name="fmt" value="H">
+            <input type="hidden" id="newsletterNewslettersInput" name="newsletters" value="app-dev">
+            <div id="newsletterErrors" class="newsletter-errors"></div>
+
+            <div id="newsletterEmail" class="form-group newsletter-group-email">
+                <label for="newsletterEmailInput" class="form-label offscreen">E-mail</label>
+                <input type="email" id="newsletterEmailInput" name="email" class="form-input newsletter-input-email" required="" placeholder="voce@exemplo.com" size="30">
+            </div>
+
+            <div id="newsletterPrivacy" class="form-group form-group-agree newsletter-group-privacy hidden">
+                <input type="checkbox" id="newsletterPrivacyInput" name="privacy" required="">
+                <label for="newsletterPrivacyInput">
+                Estou de acordo com a manipulação das minhas informações pela Mozilla conforme explicado na <a href="https://www.mozilla.org/privacy/">política de privacidade</a>.
+                </label>
+            </div>
+            <div id="newsletterSubmit" class="newsletter-group-submit">
+                <button id="newsletter-submit" type="submit" class="button neutral newsletter-submit">
+                    Assine agora<svg class="icon icon-arrow" xmlns="http://www.w3.org/2000/svg" width="23" height="28" viewBox="0 0 23 28" aria-hidden="true">
+    <path d="M23 15a2.01 2.01 0 0 1-.578 1.422L12.25 26.594c-.375.359-.891.578-1.422.578s-1.031-.219-1.406-.578L8.25 25.422c-.375-.375-.594-.891-.594-1.422s.219-1.047.594-1.422L12.828 18h-11C.703 18 0 17.062 0 16v-2c0-1.062.703-2 1.828-2h11L8.25 7.406a1.96 1.96 0 0 1 0-2.812l1.172-1.172c.375-.375.875-.594 1.406-.594s1.047.219 1.422.594l10.172 10.172c.375.359.578.875.578 1.406z"></path>
+</svg>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div id="newsletterThanks" class="newsletter-thanks hidden">
+        <h2>Obrigado! Por favor, confira sua caixa de entrada para confirmar sua assinatura.</h2>
+        <p>Se você ainda não confirmou a assinatura de um boletim informativo relacionadas com a Mozilla, terá de fazê-lo. Por favor, verifique sua caixa de entrada ou seu filtro de spam por um e-mail nosso.
+        </p>
+    </div>
+    <button id="newsletterHide" type="button" class="only-icon newsletter-hide">
+        <span>Ocultar assinatura do boletim informativo</span>
+        <svg class="icon icon-close" xmlns="http://www.w3.org/2000/svg" width="22" height="28" viewBox="0 0 22 28" aria-hidden="true">
+    <path d="M20.281 20.656c0 .391-.156.781-.438 1.062l-2.125 2.125c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438L11 19.249l-4.594 4.594c-.281.281-.672.438-1.062.438s-.781-.156-1.062-.438l-2.125-2.125c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062L6.751 15l-4.594-4.594c-.281-.281-.438-.672-.438-1.062s.156-.781.438-1.062l2.125-2.125c.281-.281.672-.438 1.062-.438s.781.156 1.062.438L11 10.751l4.594-4.594c.281-.281.672-.438 1.062-.438s.781.156 1.062.438l2.125 2.125c.281.281.438.672.438 1.062s-.156.781-.438 1.062L15.249 15l4.594 4.594c.281.281.438.672.438 1.062z"></path>
+</svg>
+    </button>
+</div>
+      </div>
+    
+
+  <menu type="context" id="edit-history-menu">
+    <menuitem data-action="/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$edit" label="Editar página"></menuitem>
+    <menuitem data-action="/pt-BR/docs/Web/API/Fetch_API/Using_Fetch$history" label="Histórico da página"></menuitem>
+  </menu>
+
+      </div>
+  </main>
+  <!-- Footer -->
+    <footer id="nav-footer" class="nav-footer">
+      <div class="center">
+          <a href="https://developer.mozilla.org/pt-BR/" class="nav-footer-logo">MDN Web Docs</a>
+<div class="footer-group footer-group-mdn">
+  <h2 class="footer-title">MDN</h2>
+  <ul class="footer-list">
+    <li><a href="https://developer.mozilla.org/pt-BR/docs/Web">Tecnologias Web</a></li>
+    <li><a href="https://developer.mozilla.org/pt-BR/docs/Learn">Aprender desenvolvimento web</a></li>
+    <li><a href="https://developer.mozilla.org/docs/MDN/About">Sobre a MDN</a></li>
+    <li><a href="https://developer.mozilla.org/pt-BR/docs/MDN/Feedback">Feedback</a></li>
+    <li class="footer-social">
+        <a href="https://twitter.com/mozdevnet">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-twitter" width="26" height="28" viewBox="0 0 26 28">
+    <title>Twitter</title>
+    <path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"></path>
+</svg>
+        </a>
+    </li>
+    <li class="footer-social">
+        <a href="https://github.com/mdn/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-github" width="24" height="28" viewBox="0 0 24 28">
+    <title>GitHub</title>
+    <path d="M12 2c6.625 0 12 5.375 12 12 0 5.297-3.437 9.797-8.203 11.391-.609.109-.828-.266-.828-.578 0-.391.016-1.687.016-3.297 0-1.125-.375-1.844-.812-2.219 2.672-.297 5.484-1.313 5.484-5.922 0-1.313-.469-2.375-1.234-3.219.125-.313.531-1.531-.125-3.187-1-.313-3.297 1.234-3.297 1.234a11.28 11.28 0 0 0-6 0S6.704 6.656 5.704 6.969c-.656 1.656-.25 2.875-.125 3.187-.766.844-1.234 1.906-1.234 3.219 0 4.594 2.797 5.625 5.469 5.922-.344.313-.656.844-.766 1.609-.688.313-2.438.844-3.484-1-.656-1.141-1.844-1.234-1.844-1.234-1.172-.016-.078.734-.078.734.781.359 1.328 1.75 1.328 1.75.703 2.141 4.047 1.422 4.047 1.422 0 1 .016 1.937.016 2.234 0 .313-.219.688-.828.578C3.439 23.796.002 19.296.002 13.999c0-6.625 5.375-12 12-12zM4.547 19.234c.031-.063-.016-.141-.109-.187-.094-.031-.172-.016-.203.031-.031.063.016.141.109.187.078.047.172.031.203-.031zm.484.532c.063-.047.047-.156-.031-.25-.078-.078-.187-.109-.25-.047-.063.047-.047.156.031.25.078.078.187.109.25.047zm.469.703c.078-.063.078-.187 0-.297-.063-.109-.187-.156-.266-.094-.078.047-.078.172 0 .281s.203.156.266.109zm.656.656c.063-.063.031-.203-.063-.297-.109-.109-.25-.125-.313-.047-.078.063-.047.203.063.297.109.109.25.125.313.047zm.891.391c.031-.094-.063-.203-.203-.25-.125-.031-.266.016-.297.109s.063.203.203.234c.125.047.266 0 .297-.094zm.984.078c0-.109-.125-.187-.266-.172-.141 0-.25.078-.25.172 0 .109.109.187.266.172.141 0 .25-.078.25-.172zm.906-.156c-.016-.094-.141-.156-.281-.141-.141.031-.234.125-.219.234.016.094.141.156.281.125s.234-.125.219-.219z"></path>
+</svg>
+        </a>
+    </li>
+  </ul>
+</div>
+
+          <a href="https://mozilla.org/" class="nav-footer-mozilla">Mozilla</a>
+<div class="footer-group footer-group-mozilla">
+  <h2 class="footer-title">Mozilla</h2>
+  <ul class="footer-list">
+    <li><a href="https://www.mozilla.org/about/">Sobre</a></li>
+    <li><a href="https://www.mozilla.org/contact/">Contate-nos</a></li>
+    <li><a href="https://www.mozilla.org/firefox/?utm_source=developer.mozilla.org&amp;utm_campaign=footer&amp;utm_medium=referral">Firefox</a></li>
+    <li class="footer-social">
+        <a href="https://twitter.com/mozilla">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-twitter" width="26" height="28" viewBox="0 0 26 28">
+    <title>Twitter</title>
+    <path d="M25.312 6.375a10.85 10.85 0 0 1-2.531 2.609c.016.219.016.438.016.656 0 6.672-5.078 14.359-14.359 14.359-2.859 0-5.516-.828-7.75-2.266.406.047.797.063 1.219.063 2.359 0 4.531-.797 6.266-2.156a5.056 5.056 0 0 1-4.719-3.5c.313.047.625.078.953.078.453 0 .906-.063 1.328-.172a5.048 5.048 0 0 1-4.047-4.953v-.063a5.093 5.093 0 0 0 2.281.641 5.044 5.044 0 0 1-2.25-4.203c0-.938.25-1.797.688-2.547a14.344 14.344 0 0 0 10.406 5.281 5.708 5.708 0 0 1-.125-1.156 5.045 5.045 0 0 1 5.047-5.047 5.03 5.03 0 0 1 3.687 1.594 9.943 9.943 0 0 0 3.203-1.219 5.032 5.032 0 0 1-2.219 2.781c1.016-.109 2-.391 2.906-.781z"></path>
+</svg>
+        </a>
+    </li>
+    <li class="footer-social">
+        <a href="https://www.facebook.com/mozilla">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-facebook" width="16" height="28" viewBox="0 0 16 28">
+    <title>Facebook</title>
+    <path d="M14.984.187v4.125h-2.453c-1.922 0-2.281.922-2.281 2.25v2.953h4.578l-.609 4.625H10.25v11.859H5.469V14.14H1.485V9.515h3.984V6.109C5.469 2.156 7.891 0 11.422 0c1.687 0 3.141.125 3.563.187z"></path>
+</svg>
+        </a>
+    </li>
+    <li class="footer-social">
+        <a href="https://www.instagram.com/mozillagram/">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-instagram" width="24" height="28" viewBox="0 0 24 28">
+    <title>Instagram</title>
+    <path d="M16 14c0-2.203-1.797-4-4-4s-4 1.797-4 4 1.797 4 4 4 4-1.797 4-4zm2.156 0c0 3.406-2.75 6.156-6.156 6.156S5.844 17.406 5.844 14 8.594 7.844 12 7.844s6.156 2.75 6.156 6.156zm1.688-6.406c0 .797-.641 1.437-1.437 1.437S16.97 8.39 16.97 7.594s.641-1.437 1.437-1.437 1.437.641 1.437 1.437zM12 4.156c-1.75 0-5.5-.141-7.078.484-.547.219-.953.484-1.375.906s-.688.828-.906 1.375c-.625 1.578-.484 5.328-.484 7.078s-.141 5.5.484 7.078c.219.547.484.953.906 1.375s.828.688 1.375.906c1.578.625 5.328.484 7.078.484s5.5.141 7.078-.484c.547-.219.953-.484 1.375-.906s.688-.828.906-1.375c.625-1.578.484-5.328.484-7.078s.141-5.5-.484-7.078c-.219-.547-.484-.953-.906-1.375s-.828-.688-1.375-.906C17.5 4.015 13.75 4.156 12 4.156zM24 14c0 1.656.016 3.297-.078 4.953-.094 1.922-.531 3.625-1.937 5.031s-3.109 1.844-5.031 1.937c-1.656.094-3.297.078-4.953.078s-3.297.016-4.953-.078c-1.922-.094-3.625-.531-5.031-1.937S.173 20.875.08 18.953C-.014 17.297.002 15.656.002 14s-.016-3.297.078-4.953c.094-1.922.531-3.625 1.937-5.031s3.109-1.844 5.031-1.937c1.656-.094 3.297-.078 4.953-.078s3.297-.016 4.953.078c1.922.094 3.625.531 5.031 1.937s1.844 3.109 1.937 5.031C24.016 10.703 24 12.344 24 14z"></path>
+</svg>
+        </a>
+    </li>
+  </ul>
+</div>
+
+          
+  
+    <form class="languages go" method="get" action="https://developer.mozilla.org/pt-BR/docs/Web">
+      <label for="language">Demais idiomas:</label>
+      <select id="language" class="wiki-l10n" name="next" dir="ltr">
+        <option title="Português (do Brasil)" data-locale="pt-BR" value="/pt-BR/docs/Web/API/Fetch_API/Using_Fetch" selected="">
+          Português (do&nbsp;Brasil) (pt-BR)
+        </option>
+        
+          <option title="Inglês (EUA)" data-locale="pt-BR" value="/en-US/docs/Web/API/Fetch_API/Using_Fetch">
+            English (US) (en-US)
+          </option>
+          <option title="Espanhol" data-locale="pt-BR" value="/es/docs/Web/API/Fetch_API/Utilizando_Fetch">
+            Español (es)
+          </option>
+          <option title="Francês" data-locale="pt-BR" value="/fr/docs/Web/API/Fetch_API/Using_Fetch">
+            Français (fr)
+          </option>
+          <option title="Italiano" data-locale="pt-BR" value="/it/docs/Web/API/Fetch_API/Using_Fetch">
+            Italiano (it)
+          </option>
+          <option title="Japonês" data-locale="pt-BR" value="/ja/docs/Web/API/Fetch_API/Using_Fetch">
+            日本語 (ja)
+          </option>
+          <option title="Coreano" data-locale="pt-BR" value="/ko/docs/Web/API/Fetch_API/Fetch%EC%9D%98_%EC%82%AC%EC%9A%A9%EB%B2%95">
+            한국어 (ko)
+          </option>
+          <option title="Russo" data-locale="pt-BR" value="/ru/docs/Web/API/Fetch_API/Using_Fetch">
+            Русский (ru)
+          </option>
+          <option title="Chinês (Simplificado)" data-locale="pt-BR" value="/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">
+            中文 (简体) (zh-CN)
+          </option>
+          <option title="Chinês (Tradicional)" data-locale="pt-BR" value="/zh-TW/docs/Web/API/Fetch_API/Using_Fetch">
+            正體中文 (繁體) (zh-TW)
+          </option>
+      </select>
+      <noscript><button type="submit">Ir</button></noscript>
+    </form>
+  
+
+
+          
+            <ul class="footer-tos">
+              <li><a href="https://www.mozilla.org/about/legal/terms/mozilla">Termos</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/">Privacidade</a></li>
+              <li><a href="https://www.mozilla.org/privacy/websites/#cookies">Cookies</a></li>
+            </ul>
+
+            <div id="license" class="contentinfo">
+              <p>© 2005-2018 Mozilla e colaboradores individuais.</p> <p>Conteúdo está disponível sob <a href="https://developer.mozilla.org/en-US/docs/MDN/About#Copyrights_and_licenses">estas licenças</a>.</p>
+            </div>
+          
+      </div>
+    </footer> 
+
+  <!-- site js -->
+  
+    
+    <!--[if lte IE 8]><script type="text/javascript" src="https://developer.mozilla.org/static/build/js/selectivizr.8bb9e662e963.js" charset="utf-8"></script><![endif]-->
+
+    
+    <script src="./Usando Fetch - Referência da API Web _ MDN_files/javascript.e7ab7d93777a.js"></script>
+    <script type="text/javascript" src="./Usando Fetch - Referência da API Web _ MDN_files/main.108e89c8b55b.js" charset="utf-8"></script>
+    <script>
+    if (window.mdn && mdn.analytics) mdn.analytics.trackOutboundLinks();
+</script>
+    
+
+  
+
+    <script async="" type="text/javascript" src="./Usando Fetch - Referência da API Web _ MDN_files/wiki.b2db7fca6e06.js" charset="utf-8"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+    <script async="" type="text/javascript" src="./Usando Fetch - Referência da API Web _ MDN_files/newsletter.a85c5c2892e5.js" charset="utf-8"></script>
+  
+
+
+
+</body></html>

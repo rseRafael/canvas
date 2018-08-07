@@ -1,3 +1,11 @@
-<p>
-  new-book works!
-</p>
+<form id="form">
+  <input type="file" name="book" id="book" />
+  <input type="submit" value="submit" (click)="submitHandler($event)"/>
+</form> 
+<div *ngIf="isFilePdf == false">
+  <h4>File must be of pdf type</h4>
+</div>
+
+<div *ngIf="isFilePdf == true">
+    <h4>File format is correct!</h4>
+  </div>

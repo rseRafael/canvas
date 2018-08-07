@@ -65,6 +65,7 @@ export class CanvasComponent implements OnInit {
     }
 
     if(ctx != null && typeof ctx == "object"){
+        console.log(`mode: ` + this.mode);
         if(mode){
             ctx.beginPath();
             ctx.strokeStyle = color;
@@ -99,7 +100,7 @@ export class CanvasComponent implements OnInit {
             console.log(this.stack);
             this.garbageStack = [];
         }
-    
+        this.mode  = !this.mode;
     }
   }
   backward(): boolean{
@@ -147,16 +148,12 @@ export class CanvasComponent implements OnInit {
         this.createMarkUp(ctx, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
     }
   }
-  canvasClickHandler(mouseEvent, ...arr){
+  canvasClickHandler(mouseEvent){
     var canvas: any = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var lineWidth: any = document.getElementById("lineWidth");
     var lineSize: any = document.getElementById("lineSize");
-    console.log("\t\t\tMOUSE EVENT: ");
-    mouseEvent = this.eventService.getMouseEvent();
-    // both lineSize.value and lineWidth.value returns a integer-like string value. Math.round transforms an empty string into 0.
-    this.createMarkUp(ctx, mouseEvent.clientX, mouseEvent.clientY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value));
-    this.createMarkUp(ctx, mouseEvent.screenX, mouseEvent.screenY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value));
+    this.createMarkUp(ctx, mouseEvent.offsetX, mouseEvent.offsetY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value), this.mode, true);
   }
   testClickHandler(m){
     var canvas: any = document.getElementById("myCanvas");

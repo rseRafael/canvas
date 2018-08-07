@@ -14,8 +14,8 @@
 </ul>
 
 <div>
-  <button id="openB">Open Highlight</button>
-  <button id="closeB">Close Highlight</button>
+  <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open Highlight</button>
+  <button id="closeB" (click)="buttonsMethods.closeMarkUp()" [class.selected]="mode == false">Close Highlight</button>
   <label>
       Line Width: 
       <input type="number" name="width" id="lineWidth" placeholder="3"/>
@@ -24,18 +24,21 @@
       line Size:
       <input type="number" id="lineSize" placeholder="10"/>
   </label>
+  <div>
+    <button id="saveB">Save</button>
+  </div>
   
 </div>
 
 
 <div>
-  <button id="backward">Backward</button>
-  <button id="forward">Forward</button>
+  <button id="backward" (click)="backward()">Backward</button>
+  <button id="forward" (click)="forward()">Forward</button>
   <button id="eraseAll" (click)="loadImage()">Erase All</button>
 </div>
 <div>
   <button id="imageButton" (click)="loadImage()">Load Image</button>
 </div>
-<canvas id="myCanvas" height="2000" width="2000" style="border: 1px solid black; cursor:pointer;" (click) ="testClickHandler($event)">
+<canvas id="myCanvas" height="0" width="0" style="border: 1px solid black; cursor:pointer;" (click) ="canvasClickHandler($event)">
 </canvas>
 <img id="canvasImage" src={{imagePath}} style="display: none;"/>

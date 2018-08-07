@@ -11,6 +11,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { CanvasComponent } from './canvas/canvas.component';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { CanvasComponent } from './canvas/canvas.component';
     MatSidenavModule,
     MatCardModule,
     MatButtonToggleModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
