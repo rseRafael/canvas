@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../event.service';
+import { BookService } from '../book.service';
 
 @Component({
   selector: 'app-canvas',
@@ -8,12 +8,15 @@ import { EventService } from '../event.service';
 })
 
 export class CanvasComponent implements OnInit {
-
+  public received = true;
+  public clicked = false;
+  public intervalSettter = null;
+  private currentImgPath= null;
+  private currentPDFPages = null;
   private stack = [];
   private garbageStack = [];
   private color = 'black';
   private mode = true;
-  private imagePath = "https://www.gettyimages.ie/gi-resources/images/Homepage/Hero/UK/CMS_Creative_164657191_Kingfisher.jpg";
   private ids = {
     'blueButton': ''
   }
@@ -37,13 +40,55 @@ export class CanvasComponent implements OnInit {
     closeMarkUp: ()=>{
       this.mode = false;
     },
+    nextPage:()=>{
+      var host = "http://localhost:8080/";
+      var arr = this.currentImgPath.split("/");
+      var page = arr.pop();
+      var path = arr.pop();
+      page = parseInt(page.replace(".jpg", ""));
+      if(page < this.currentPDFPages){
+        page += 1;
+        var length = String(this.currentPDFPages).length;
+        page = this.formatNumber(page, length) + ".jpg";
+        this.currentImgPath = host + path + "/" + page;
+        this.getStack();
+
+      }
+    },
+    backPage: ()=>{
+      var host = "http://localhost:8080/";
+      var arr = this.currentImgPath.split("/");
+      var page = arr.pop();
+      var path = arr.pop();
+      page = parseInt(page.replace(".jpg", ""));
+      if(page > 1){
+        page -= 1;
+        var length = String(this.currentPDFPages).length;
+        page = this.formatNumber(page, length) + ".jpg";
+        this.currentImgPath = host + path + "/" + page;
+        this.getStack();
+
+      }
+    }
   }
 
-  constructor(private eventService: EventService){ 
+  constructor(private bookservice: BookService){ 
+  }
+
+  formatNumber(number, length){
+    number = String(number);
+    while(number.length < length){
+      number = "0" + number;
+    }
+    return number;
   }
 
   ngOnInit() {
-
+    this.currentImgPath = this.bookservice.imgsPath;
+    this.currentPDFPages = this.bookservice.PAGES;
+    this.loadImage(this.currentImgPath);
+    this.getStack();
+    
   }
 
   createMarkUp(ctx, x, y, color = "black", width = 3,  size = 10, mode = true, push = true){
@@ -103,6 +148,7 @@ export class CanvasComponent implements OnInit {
         this.mode  = !this.mode;
     }
   }
+
   backward(): boolean{
     if(this.stack.length > 0){
       this.garbageStack.push(this.stack.pop());
@@ -113,6 +159,7 @@ export class CanvasComponent implements OnInit {
       return false;
     }
   }
+
   forward(): boolean{
     if(this.garbageStack.length >0){
       this.stack.push(this.garbageStack.pop());
@@ -123,55 +170,139 @@ export class CanvasComponent implements OnInit {
       return false;
     }
   }
+
   replace(){
     var canvas: any = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     ctx.fillStyle = "white";
     ctx.fillRect(0,0,canvas.clientWidth, canvas.clientHeight);
   }
-  loadImage(){
-    //var img = document.getElementById("canvas-image");
-    var img = new Image();
-    img.src = this.imagePath;
-    var canvas: any = document.getElementById("myCanvas");
-    canvas.setAttribute("height", img.height);
-    canvas.setAttribute("width", img.width);
-    var context = canvas.getContext("2d");
-    context.drawImage(img, 0, 0);
 
+  loadImage(imgPath){
+    var img = new Image();
+    img.src = imgPath;
+    img.onload = 
+      ()=>{ 
+        console.log(imgPath);
+        var canvas: any = document.getElementById("myCanvas");
+        canvas.setAttribute("height", img.height);
+        canvas.setAttribute("width", img.width);
+        var context = canvas.getContext("2d");
+        context.drawImage(img, 0, 0);
+      }
+    
   }
+
   recreateMarkUp(){
-    this.loadImage();
-    var canvas: any  = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    for(var i = 0; i < this.stack.length; i++){
-        this.createMarkUp(ctx, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
+    var img = new Image();
+    img.src = this.currentImgPath;
+    img.onload = 
+      ()=>{ 
+        console.log(this.currentImgPath);
+        var canvas: any = document.getElementById("myCanvas");
+        canvas.setAttribute("height", img.height);
+        canvas.setAttribute("width", img.width);
+        var context = canvas.getContext("2d");
+        context.drawImage(img, 0, 0);
+        for(var i = 0; i < this.stack.length; i++){
+          this.createMarkUp(context, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
+      }
     }
   }
+
   canvasClickHandler(mouseEvent){
+    this.clicked = true;
     var canvas: any = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");
     var lineWidth: any = document.getElementById("lineWidth");
     var lineSize: any = document.getElementById("lineSize");
     this.createMarkUp(ctx, mouseEvent.offsetX, mouseEvent.offsetY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value), this.mode, true);
+    this.clicked = false;
   }
-  testClickHandler(m){
-    var canvas: any = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    var lineSize: any = document.getElementById("lineSize");
-    ctx.fillStyle = "green";
-    console.log("\t\t\t\t\tREAL VALUES");
 
-    //offsetX and offsetY são clientX - canvas.getClientRects()[0].x && clientY - canvas.getClientRects()[0].y;
-    
-    console.log(m.offsetX, m.offsetY)
-    var x = m.clientX - canvas.getClientRects()[0].x;
-    var y = m.clientY - canvas.getClientRects()[0].y;
-    console.log("\t\t\t\t\tCOMPARE");
-    console.log(x, y);
-    ctx.fillRect(m.clientX - canvas.getClientRects()[0].x, m.clientY - canvas.getClientRects()[0].y, 10, 10);
-    console.log("\t\tMOUSE EVENT");
-    console.log(m);
-    ctx.stroke();
+
+  sendStack(){
+    var data = new FormData();
+    var header = new Headers();
+    data.append("imgPATH",  this.currentImgPath);
+    for (var i = 0; i < this.stack.length; i++){
+      var json = JSON.stringify(this.stack[i])
+      console.log(json);
+      data.append("obj" + (i+1), json);
+    }
+    var options: any ={
+      'method': 'POST',
+      'mode': 'cors',
+      'headers': header,
+      'redirect': 'follow',
+      'body': data,
+    }
+    this.received = false;
+    console.log("Sending the stack");
+    fetch("http://localhost:8000/books/setstack/", options)
+    .then((value)=>{
+      console.log(value);
+      return value.json();
+    })
+    .then((value)=>{
+      console.log(value);
+      this.received = true;
+      console.log("the stack was sent");
+    })
+    .catch((reason)=>{
+      console.log("deu erro");
+      console.log(reason);
+    })
   }
+  
+  SetInterval(){
+    this.intervalSettter = setInterval(
+      ()=>{
+        if(this.received && !this.clicked){
+          this.sendStack();
+        }
+      },
+      2000
+    )
+  }
+
+  getStack(){
+    var arr = this.currentImgPath.split("/");
+    var page = arr.pop();
+    var book_id = parseInt(arr.pop().replace("book", ""));
+    fetch(`http://localhost:8000/books/getstack/${book_id}/${page}/`)
+    .then(
+      (response)=>{
+        console.log(response);
+        return response.json();
+      }
+    )
+    .then(
+      (response)=>{
+
+        console.log(response);
+        console.log("reponse['info']")
+        console.log(response['info'])
+        if (response['info'] === undefined ){
+          console.log("foi")
+          this.stack = [];
+          for(var obj in response){
+            var o = response[obj];
+            console.log(o);
+            this.stack.push(JSON.parse(o));
+          }
+          console.log(this.stack);
+          this.recreateMarkUp();
+        }
+        //this.SetInterval();
+      }
+    )
+    .catch(
+      (reason)=>{
+        console.log("Aconteceu um Erro");
+        console.log(reason);
+      }
+    )
+  }
+
 }

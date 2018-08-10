@@ -51,7 +51,5 @@ export class NewBookComponent implements OnInit {
         this.isFilePdf = false;
       }
     }
-    
-
   }
 }

@@ -1,19 +1,17 @@
 <div>
-  <mat-card class="card-container">
-    <mat-card-title class='card-title'>
-      <h3>Titulo do livro</h3>
-    </mat-card-title>
-    
-    <mat-card-content class='card-content'>
-      <img  class='img-card' src="https://http2.mlstatic.com/livro-harry-potter-e-a-cmara-secreta-capa-dura-novo-lacrado-D_NQ_NP_732839-MLB26492967186_122017-F.jpg"/>
-    </mat-card-content>
-
-    <mat-card-actions>
-      <mat-button-toggle-group  name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle value="bold">Delete</mat-button-toggle>
-        <mat-button-toggle value="italic">Open</mat-button-toggle>
-        <mat-button-toggle value="underline">Details</mat-button-toggle>
-      </mat-button-toggle-group>      
-    </mat-card-actions>
-  </mat-card>
+  
+  <div *ngIf="bookList !== null">-
+    <div *ngFor="let book of bookList" (click) = "loadCanvas(book)" style="height: 300px; width: 300px; display: inline-block; border: 1px solid black; padding: 5px; margin: 10px; cursor: pointer;">
+      <p>Nome: {{book["NAME"]}}</p>
+      <p>path: {{book.capaPATH}}</p>
+      <p>ID: {{book.id}}</p>
+      <img src={{book.capaPATH}} style="height: 200px; width: 200px;"/>  
+    </div> 
+    <p>
+      {{booksJson}}
+    </p>
+  </div>
+  <div *ngIf="bookList === null">
+    <h4>There are no books here. Please,<a routerLink="/newbook">add</a> new book to fill this page.</h4>
+  </div>
 </div>

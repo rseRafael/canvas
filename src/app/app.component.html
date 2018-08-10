@@ -1,22 +1,17 @@
 <div class="container-fluid main-container">
-    <div class="row main-row">
-      <div class="col-sm-2">
-        <ul>
-          <li>
-            <a routerLink='/home'>Home</a>
-          </li>
-          <li>
-            <a routerLink='/newbook'>New Book</a>
-          </li>
-          <li>
-            <a routerLink='/canvas'>Canvas</a>
-          </li>
-        </ul>
+  
+    <div class="row nav-row">
+      <div class="col-sm-2 rowify">
+        <p routerLink = "/home" style="cursor: pointer;">Home</p>
+        <p routerLink = "/newbook" style="cursor: pointer;">Add Book</p>
       </div>
       <div class="col-sm-10">
-        <p>Precisa ter alguma coisa</p>
-        <router-outlet></router-outlet>
       </div>
     </div>
-  </div>
+    <div class="row main-row"> 
+      <div class="col-sm-12">
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+</div>
   

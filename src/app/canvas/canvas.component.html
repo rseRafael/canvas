@@ -1,44 +1,41 @@
-<ul>
-  <li>
-      <button (click)="buttonsMethods.setColorBlue()">Blue</button>
-  </li>
-  <li>
-      <button (click)="buttonsMethods.setColorGreen()"> Green</button>
-  </li>
-  <li>
-      <button (click)="buttonsMethods.setColorPink()">Pink</button>
-  </li>
-  <li>
-    <button (click)="buttonsMethods.showColor()">Log Color</button>
-  </li>
-</ul>
+<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; width: 70%;">
 
-<div>
-  <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open Highlight</button>
-  <button id="closeB" (click)="buttonsMethods.closeMarkUp()" [class.selected]="mode == false">Close Highlight</button>
+  <div (click)="buttonsMethods.setColorBlue()" style="background-color: blue; display: inline-block; height: 20px; width: 20px;"></div>
+
+  <div (click)="buttonsMethods.setColorGreen()" style="background-color: green; display: inline-block; height: 20px; width: 20px;"></div>
+
+  <div (click)="buttonsMethods.setColorPink()" style="background-color: pink; display: inline-block; height: 20px; width: 20px;"></div>
+
+  <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open MarkUp</button>
+
+  <button id="closeB" (click)="buttonsMethods.closeMarkUp()" [class.selected]="mode == false">Close MarkUp</button>
+
   <label>
       Line Width: 
-      <input type="number" name="width" id="lineWidth" placeholder="3"/>
+      <input type="number" name="width" id="lineWidth" placeholder="3" style= "width: 30px;"/>
   </label>
+
   <label>
       line Size:
-      <input type="number" id="lineSize" placeholder="10"/>
+      <input type="number" id="lineSize" placeholder="10" style="width: 50px;"/>
   </label>
-  <div>
-    <button id="saveB">Save</button>
-  </div>
-  
-</div>
 
-
-<div>
   <button id="backward" (click)="backward()">Backward</button>
+
   <button id="forward" (click)="forward()">Forward</button>
+
   <button id="eraseAll" (click)="loadImage()">Erase All</button>
-</div>
-<div>
-  <button id="imageButton" (click)="loadImage()">Load Image</button>
+
+  <button id="" (click)="buttonsMethods.backPage()">Back</button>
+
+  <button id="" (click)="buttonsMethods.nextPage()">Next</button>
+
+  <button (click)="sendStack()">Send Stack</button>
+
+  <button (click)="getStack()">Get Stack</button>
 </div>
 <canvas id="myCanvas" height="0" width="0" style="border: 1px solid black; cursor:pointer;" (click) ="canvasClickHandler($event)">
 </canvas>
-<img id="canvasImage" src={{imagePath}} style="display: none;"/>
+<!--
+<img id="canvasImage" src={{currentImgPath}} style="display: none;"/>
+-->
