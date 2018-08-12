@@ -180,6 +180,7 @@ export class CanvasComponent implements OnInit {
 
   loadImage(imgPath){
     var img = new Image();
+    img.crossOrigin = "anonymous";
     img.src = imgPath;
     img.onload = 
       ()=>{ 
@@ -222,14 +223,20 @@ export class CanvasComponent implements OnInit {
 
 
   sendStack(){
-    var data = new FormData();
+    var canvas: any = document.getElementById("myCanvas");
+    var input: any = document.getElementById("hidden_data");
+    input.value = canvas.toDataURL("image/png").replace("data:image/png;base64,", "");
+
+    var data = new FormData(document.forms["myForm"]);
     var header = new Headers();
+
     data.append("imgPATH",  this.currentImgPath);
+
     for (var i = 0; i < this.stack.length; i++){
       var json = JSON.stringify(this.stack[i])
-      console.log(json);
       data.append("obj" + (i+1), json);
     }
+   
     var options: any ={
       'method': 'POST',
       'mode': 'cors',
@@ -237,6 +244,7 @@ export class CanvasComponent implements OnInit {
       'redirect': 'follow',
       'body': data,
     }
+
     this.received = false;
     console.log("Sending the stack");
     fetch("http://localhost:8000/books/setstack/", options)
