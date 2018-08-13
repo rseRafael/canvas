@@ -8,6 +8,7 @@ import { BookService } from '../book.service';
 })
 
 export class CanvasComponent implements OnInit {
+  public open = false;
   public received = true;
   public clicked = false;
   public intervalSettter = null;
@@ -40,20 +41,38 @@ export class CanvasComponent implements OnInit {
     closeMarkUp: ()=>{
       this.mode = false;
     },
-    nextPage:()=>{
-      var host = "http://localhost:8080/";
-      var arr = this.currentImgPath.split("/");
-      var page = arr.pop();
-      var path = arr.pop();
-      page = parseInt(page.replace(".jpg", ""));
-      if(page < this.currentPDFPages){
-        page += 1;
-        var length = String(this.currentPDFPages).length;
-        page = this.formatNumber(page, length) + ".jpg";
-        this.currentImgPath = host + path + "/" + page;
-        this.getStack();
+    nextPage:(selectedPage = null)=>{
+      if(selectedPage == null){
+        var host = "http://localhost:8080/";
+        var arr = this.currentImgPath.split("/");
+        var page = arr.pop();
+        var path = arr.pop();
+        page = parseInt(page.replace(".jpg", ""));
+        if(page < this.currentPDFPages){
+          page += 1;
+          var length = String(this.currentPDFPages).length;
+          page = this.formatNumber(page, length) + ".jpg";
+          this.currentImgPath = host + path + "/" + page;
+          this.getStack();
+          this.buttonsMethods.setPage();
 
+        }
       }
+      else{
+        var host = "http://localhost:8080/";
+        var arr = this.currentImgPath.split("/");
+        var page = arr.pop();
+        var path = arr.pop();
+        page = selectedPage
+        if(page < this.currentPDFPages){
+          var length = String(this.currentPDFPages).length;
+          page = this.formatNumber(page, length) + ".jpg";
+          this.currentImgPath = host + path + "/" + page;
+          this.getStack();
+          this.buttonsMethods.setPage();
+        }
+     }
+      
     },
     backPage: ()=>{
       var host = "http://localhost:8080/";
@@ -67,8 +86,46 @@ export class CanvasComponent implements OnInit {
         page = this.formatNumber(page, length) + ".jpg";
         this.currentImgPath = host + path + "/" + page;
         this.getStack();
-
+        this.buttonsMethods.setPage();
       }
+    },
+    setPage:()=>{
+      var pg: any = document.getElementById("pageNumber");
+      var path  =this.currentImgPath.split("/");
+      var number = path.pop();
+      number = parseInt(number.replace(".jpg",  ""));
+      console.log(number);
+      pg.value = number;
+
+    },
+    goToPage: ()=>{
+      var pg: any = document.getElementById("pageNumber");
+      this.buttonsMethods.nextPage(pg.value);
+    },
+    setConfigDiv: ()=>{
+      
+      var mainDiv = document.getElementById("configDiv");
+      var open = !this.open;
+      
+      if(open == true){
+        mainDiv.style.animation = "increase";
+        mainDiv.style.animationDuration = "0.5s";
+        mainDiv.style.animationIterationCount = "1";
+        mainDiv.style.width = "1700px";
+      }
+      else{
+        mainDiv.style.animation = "decrease";
+        mainDiv.style.animationDuration = "0.5s";
+        mainDiv.style.animationIterationCount = "1";
+        mainDiv.style.width = "55px";
+      }
+      mainDiv.addEventListener("animationend",()=>{
+        this.open = open;
+        console.log("Finishing animation");
+      });
+      mainDiv.addEventListener("animationstart", ()=>{
+        console.log("beggining animation");
+      });
     }
   }
 
@@ -88,6 +145,8 @@ export class CanvasComponent implements OnInit {
     this.currentPDFPages = this.bookservice.PAGES;
     this.loadImage(this.currentImgPath);
     this.getStack();
+    this.buttonsMethods.setPage();
+    console.log("pdf pages: ", this.currentPDFPages);
     
   }
 
@@ -197,6 +256,7 @@ export class CanvasComponent implements OnInit {
   recreateMarkUp(){
     var img = new Image();
     img.src = this.currentImgPath;
+    img.crossOrigin = "anonymous";
     img.onload = 
       ()=>{ 
         console.log(this.currentImgPath);

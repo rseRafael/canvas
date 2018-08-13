@@ -1,38 +1,51 @@
-<div style="display: flex; flex-direction: row; justify-content: space-around; align-items: center; width: 70%;">
+<div id="configDiv" (click)="buttonsMethods.setConfigDiv()">
+    <div *ngIf="open == false">
+        <i id="menu-icon" class="glyphicon glyphicon-menu-hamburger"></i>
+    </div>
+    <div id="buttonsDiv" *ngIf="open == true">
+        <div (click)="buttonsMethods.setColorBlue()" style="background-color: blue; display: inline-block; height: 20px; width: 20px;"></div>
 
-  <div (click)="buttonsMethods.setColorBlue()" style="background-color: blue; display: inline-block; height: 20px; width: 20px;"></div>
+        <div (click)="buttonsMethods.setColorGreen()" style="background-color: green; display: inline-block; height: 20px; width: 20px;"></div>
+    
+        <div (click)="buttonsMethods.setColorPink()" style="background-color: pink; display: inline-block; height: 20px; width: 20px;"></div>
+    
+        <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open MarkUp</button>
+    
+        <button id="closeB" (click)="buttonsMethods.closeMarkUp()" [class.selected]="mode == false">Close MarkUp</button>
+    
+        <label>
+            Line Width: 
+            <input type="number" name="width" id="lineWidth" placeholder="3" style= "width: 30px;"/>
+        </label>
+    
+        <label>
+            line Size:
+            <input type="number" id="lineSize" placeholder="10" style="width: 50px;"/>
+        </label>
+    
+        <button id="backward" (click)="backward()">Backward</button>
+    
+        <button id="forward" (click)="forward()">Forward</button>
+    
+        <button id="eraseAll" (click)="loadImage()">Erase All</button>
+    
+        <button id="" (click)="buttonsMethods.backPage()">Back</button>
+    
+        <button id="" (click)="buttonsMethods.nextPage()">Next</button>
+    
+        <label>
+            Page: 
+            <input type="number" id="pageNumber" style="width: 50px;"/>
+            Páginas: {{currentPDFPages}}
+        </label>
 
-  <div (click)="buttonsMethods.setColorGreen()" style="background-color: green; display: inline-block; height: 20px; width: 20px;"></div>
-
-  <div (click)="buttonsMethods.setColorPink()" style="background-color: pink; display: inline-block; height: 20px; width: 20px;"></div>
-
-  <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open MarkUp</button>
-
-  <button id="closeB" (click)="buttonsMethods.closeMarkUp()" [class.selected]="mode == false">Close MarkUp</button>
-
-  <label>
-      Line Width: 
-      <input type="number" name="width" id="lineWidth" placeholder="3" style= "width: 30px;"/>
-  </label>
-
-  <label>
-      line Size:
-      <input type="number" id="lineSize" placeholder="10" style="width: 50px;"/>
-  </label>
-
-  <button id="backward" (click)="backward()">Backward</button>
-
-  <button id="forward" (click)="forward()">Forward</button>
-
-  <button id="eraseAll" (click)="loadImage()">Erase All</button>
-
-  <button id="" (click)="buttonsMethods.backPage()">Back</button>
-
-  <button id="" (click)="buttonsMethods.nextPage()">Next</button>
-
-  <button (click)="sendStack()">Send Stack</button>
-
-  <button (click)="getStack()">Get Stack</button>
+        <button (click)="buttonsMethods.goToPage()">Go to Page</button>
+    
+        <button (click)="sendStack()">Send Stack</button>
+    
+        <button (click)="getStack()">Get Stack</button>
+    </div>
+  
 </div>
 <canvas id="myCanvas" height="0" width="0" style="border: 1px solid black; cursor:pointer;" (click) ="canvasClickHandler($event)">
 </canvas>

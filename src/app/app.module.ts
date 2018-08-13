@@ -12,6 +12,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 import { CanvasComponent } from './canvas/canvas.component';
 import {HttpClientModule} from '@angular/common/http';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {HttpClientModule} from '@angular/common/http';
     MatCardModule,
     MatButtonToggleModule,
     HttpClientModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

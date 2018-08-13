@@ -6,16 +6,21 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./new-book.component.css']
 })
 export class NewBookComponent implements OnInit {
-
+  isUploading = false;
   isFilePdf = null;
+  Answer = "";
 
   constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.isUploading = null;
+    console.log(this.isUploading);
   }
 
   submitHandler(event: Event){
     event.preventDefault();
+    this.isUploading = true;
+    this.Answer = "";
     var book: any = document.getElementById("book");
     var file: any = book.files[0];
     console.log(file)
@@ -36,13 +41,17 @@ export class NewBookComponent implements OnInit {
         }
         fetch("http://localhost:8000/book/upload/", options)
         .then((value)=>{
+          this.isUploading = false;
           console.log(value);
           return value.json();
         })
         .then((value)=>{
+          this.Answer = "Upload Succeded!";
           console.log(value);
         })
         .catch((reason)=>{
+          this.isUploading = false;
+          this.Answer = "Upload Failed!";
           console.log("deu erro");
           console.log(reason);
         })

@@ -8,4 +8,10 @@
 
 <div *ngIf="isFilePdf == true">
     <h4>File format is correct!</h4>
-  </div>
+</div>
+<div *ngIf="isUploading == true">
+  <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+</div>
+<div *ngIf="isUploaging == false">
+  <h4>Resposta: {{Answer}}</h4>
+</div>
