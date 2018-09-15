@@ -8,6 +8,8 @@
         <div (click)="buttonsMethods.setColorGreen()" style="background-color: green; display: inline-block; height: 20px; width: 20px;"></div>
     
         <div (click)="buttonsMethods.setColorPink()" style="background-color: rgba(255, 50, 149, 0.92); display: inline-block; height: 20px; width: 20px;"></div>
+
+        <button (click)="makeErasable()">Erase</button>
     
         <button id="openB" (click)="buttonsMethods.openMarkUp()" [class.selected]="mode == true">Open MarkUp</button>
     
@@ -44,7 +46,7 @@
         <button (click)="sendStack()">Send Stack</button>
     
          <!--<button (click)="getStack()">Get Stack</button>-->
-         <button (click)="makeErasable()">Erase</button>
+        
         <button (click)="buttonsMethods.setConfigDiv()">CLOSE</button>
     </div>
   
