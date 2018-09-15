@@ -21,15 +21,18 @@ export class CanvasComponent implements OnInit {
   private ids = {
     'blueButton': ''
   }
-
+  private erasable = false;
   private buttonsMethods = {
     setColorBlue: ()=>{
+      this.makeUnerasable();
       this.color = 'blue';
     },
     setColorGreen: ()=>{
+      this.makeUnerasable();
       this.color ='green';
     },
     setColorPink: ()=>{
+      this.makeUnerasable();
       this.color = 'rgba(255, 50, 149, 0.92)';
     },
     showColor: ()=>{
@@ -283,13 +286,22 @@ export class CanvasComponent implements OnInit {
   }
 
   canvasClickHandler(mouseEvent){
-    this.clicked = true;
-    var canvas: any = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    var lineWidth: any = document.getElementById("lineWidth");
-    var lineSize: any = document.getElementById("lineSize");
-    this.createMarkUp(ctx, mouseEvent.offsetX, mouseEvent.offsetY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value), this.mode, true);
-    this.clicked = false;
+    if(this.erasable){
+      console.log("start erasing");
+      this.eraseMark(mouseEvent);
+     
+    }
+    else{
+      console.log("start marking up");
+      var canvas: any = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var lineWidth: any = document.getElementById("lineWidth");
+      var lineSize: any = document.getElementById("lineSize");
+      this.createMarkUp(ctx, mouseEvent.offsetX, mouseEvent.offsetY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value), this.mode, true);
+      console.log(this.stack.length);
+    }
+   
+
   }
 
 
@@ -384,6 +396,65 @@ export class CanvasComponent implements OnInit {
         console.log(reason);
       }
     )
+  }
+
+  makeErasable(){
+    this.erasable = true;
+  }
+
+  makeUnerasable(){
+    this.erasable = false;
+  }
+
+  eraseMark(mouseEvent){
+    var x0 = mouseEvent.offsetX;
+    var y0 = mouseEvent.offsetY;
+    var dist: number = null;
+    var index = null;
+    for( var i in this.stack){  
+      var d = this.distance(x0, y0, this.stack[i].x, this.stack[i].y);
+      if(dist === null){
+        dist = d;
+        index = parseInt(i);
+      }
+      else if(d < dist){
+        dist = d;
+        index = parseInt(i);
+      }
+    }
+    if(dist !== null && index !== null){
+      if(dist <= 15){
+        console.log(`distance: ${dist}, index: ${index}`);
+        this.popAnIndex(index);
+      }
+    }
+  }
+
+  popAnIndex(index: number){
+    console.log("index: ");
+    console.log(index);
+    var stack1 = this.stack.slice(0, index);
+    console.log("this.stack.length: " + this.stack.length);
+    var indexplus = index + 1;
+    console.log("indexplus: "+ indexplus);
+    var stack2 = this.stack.slice(indexplus, this.stack.length);
+    console.log("this.stack.length: " + this.stack.length);
+    console.log("Stack 1: ");
+    console.log(stack1);
+    console.log("Stack 2:");
+    console.log(stack2);
+    console.log("old stack length: " + this.stack.length);
+    this.stack = stack1.concat(stack2);
+    console.log("new stack length: " + this.stack.length);
+    var popedItem = this.stack[index];
+    this.garbageStack.push(popedItem);
+    this.recreateMarkUp();
+    console.log(`recreated!!`);
+  }
+
+  distance(x0, y0, x1, y1): number{
+    var dist = Math.sqrt((x1 - x0)**2 + (y1 - y0)**2);
+    return dist;
   }
 
 }

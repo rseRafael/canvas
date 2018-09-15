@@ -43,13 +43,13 @@
     
         <button (click)="sendStack()">Send Stack</button>
     
-        <button (click)="getStack()">Get Stack</button>
-
+         <!--<button (click)="getStack()">Get Stack</button>-->
+         <button (click)="makeErasable()">Erase</button>
         <button (click)="buttonsMethods.setConfigDiv()">CLOSE</button>
     </div>
   
 </div>
-<canvas id="myCanvas" height="0" width="0" style="border: 1px solid black; cursor:text;" (click) ="canvasClickHandler($event)">
+<canvas id="myCanvas" height="0" width="0" (click) ="canvasClickHandler($event)" [class.eraser]="erasable == true" [class.markable]="erasable == false">
 </canvas>
 <form style="display: none;" id="myForm" name="myForm">
     <input type="hidden" name="image" id="hidden_data"/>
