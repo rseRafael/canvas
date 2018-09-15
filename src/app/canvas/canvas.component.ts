@@ -30,7 +30,7 @@ export class CanvasComponent implements OnInit {
       this.color ='green';
     },
     setColorPink: ()=>{
-      this.color = 'pink';
+      this.color = 'rgba(255, 50, 149, 0.92)';
     },
     showColor: ()=>{
       console.log(this.color);
@@ -143,9 +143,13 @@ export class CanvasComponent implements OnInit {
   ngOnInit() {
     this.currentImgPath = this.bookservice.imgsPath;
     this.currentPDFPages = this.bookservice.PAGES;
+    console.log(1);
     this.loadImage(this.currentImgPath);
+    console.log(2);
     this.getStack();
+    console.log(3);
     this.buttonsMethods.setPage();
+    console.log(4);
     console.log("pdf pages: ", this.currentPDFPages);
     
   }
@@ -241,14 +245,18 @@ export class CanvasComponent implements OnInit {
     var img = new Image();
     img.crossOrigin = "anonymous";
     img.src = imgPath;
+    console.log("loadImage");
     img.onload = 
       ()=>{ 
         console.log(imgPath);
         var canvas: any = document.getElementById("myCanvas");
-        canvas.setAttribute("height", img.height);
-        canvas.setAttribute("width", img.width);
+        var height = img.height/1.5;
+        var width = img.width/1.5;
+        canvas.setAttribute("height", height);
+        canvas.setAttribute("width", width);
+        console.log(canvas.height, canvas.width);
         var context = canvas.getContext("2d");
-        context.drawImage(img, 0, 0);
+        context.drawImage(img, 0, 0, width, height);
       }
     
   }
@@ -257,14 +265,17 @@ export class CanvasComponent implements OnInit {
     var img = new Image();
     img.src = this.currentImgPath;
     img.crossOrigin = "anonymous";
+    console.log("reacreateMarkUp");
     img.onload = 
       ()=>{ 
         console.log(this.currentImgPath);
         var canvas: any = document.getElementById("myCanvas");
-        canvas.setAttribute("height", img.height);
-        canvas.setAttribute("width", img.width);
+        var height = img.height/1.5;
+        var width = img.width/1.5;
+        canvas.setAttribute("height", height);
+        canvas.setAttribute("width", width);
         var context = canvas.getContext("2d");
-        context.drawImage(img, 0, 0);
+        context.drawImage(img, 0, 0, width, height);
         for(var i = 0; i < this.stack.length; i++){
           this.createMarkUp(context, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
       }
@@ -291,11 +302,14 @@ export class CanvasComponent implements OnInit {
     var header = new Headers();
 
     data.append("imgPATH",  this.currentImgPath);
-
+    
+    console.log("Loopar a stack");
     for (var i = 0; i < this.stack.length; i++){
       var json = JSON.stringify(this.stack[i])
+      console.log(`${i}-object: ${json}`);
       data.append("obj" + (i+1), json);
     }
+    console.log("Fazer a stack normal");
    
     var options: any ={
       'method': 'POST',
@@ -306,7 +320,7 @@ export class CanvasComponent implements OnInit {
     }
 
     this.received = false;
-    console.log("Sending the stack");
+    console.log("Sending the stack of length: " + this.stack.length);
     fetch("http://localhost:8000/books/setstack/", options)
     .then((value)=>{
       console.log(value);
@@ -352,7 +366,6 @@ export class CanvasComponent implements OnInit {
         console.log("reponse['info']")
         console.log(response['info'])
         if (response['info'] === undefined ){
-          console.log("foi")
           this.stack = [];
           for(var obj in response){
             var o = response[obj];
