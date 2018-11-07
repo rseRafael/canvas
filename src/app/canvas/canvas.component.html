@@ -51,8 +51,26 @@
     </div>
   
 </div>
-<canvas id="myCanvas" height="0" width="0" (click) ="canvasClickHandler($event)" [class.eraser]="erasable == true" [class.markable]="erasable == false">
+<!--
+<canvas id="myCanvas" height="0" width="0" (click) ="canvasClickHandler($event)" [class.eraser]="erasable == true" [class.markable]="erasable == false" >
 </canvas>
+-->
+<div
+ id="canvas-container">
+    <canvas id="myCanvas" height="500" width="500" (click)="canvasClickHandler($event)" [class.eraser]="erasable == true" [class.markable]="erasable == false" >
+    </canvas>
+    <div
+        id="nice"
+        style="border: 5px solid blue; background-color: lightblue; height: 200px; width: 300px;">
+        <button
+        (click)="zoomIn()">Zoom in</button>
+        <button
+        (click)="zoomOut()">Zoom out</button>
+    </div>
+
+</div>
+
+
 <form style="display: none;" id="myForm" name="myForm">
     <input type="hidden" name="image" id="hidden_data"/>
 </form>

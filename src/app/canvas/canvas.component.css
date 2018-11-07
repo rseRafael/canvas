@@ -2,8 +2,6 @@
     background-color: rgba(255, 100, 50, 1);
 }
 
-
-
 #configDiv{
     display: flex; 
     flex-direction: row; 
@@ -55,4 +53,17 @@
 .markable{
     cursor: text;
     border: 1px solid blue;
+}
+
+#myCanvas{
+    cursor: pointer;
+    border: 3px solid red;
+}
+
+#canvas-container{
+    height: 100%;
+    width: 100%;
+    border: 3px solid orange;
+    overflow-x: scroll;
+    overflow-y: scroll;
 }

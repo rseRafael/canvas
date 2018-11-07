@@ -18,6 +18,7 @@ export class CanvasComponent implements OnInit {
   private garbageStack = [];
   private color = 'black';
   private mode = true;
+  private zoomer = 3;
   private ids = {
     'blueButton': ''
   }
@@ -147,21 +148,59 @@ export class CanvasComponent implements OnInit {
     this.currentImgPath = this.bookservice.imgsPath;
     this.currentPDFPages = this.bookservice.PAGES;
     console.log(1);
+    this.currentImgPath = "http://localhost:8000/static/dog.jpg"
     this.loadImage(this.currentImgPath);
     console.log(2);
-    this.getStack();
+    //this.getStack();
     console.log(3);
-    this.buttonsMethods.setPage();
+    //this.buttonsMethods.setPage();
     console.log(4);
-    console.log("pdf pages: ", this.currentPDFPages);
-    
+    //console.log("pdf pages: ", this.currentPDFPages);
+    var canvas = document.getElementById("myCanvas");
+    /*
+    canvas.onmousemove = (event)=>{
+      this.whereWeAre(event.offsetX, event.offsetY);
+    }
+    canvas.onmouseover = (event) =>{
+      console.log("hello, world")
+      this.whereWeAre(event.offsetX, event.offsetY);
+    }
+    */
+   /*
+    canvas.onclick = (event)=>{
+      console.log("clicked");
+      var canvas: any = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      ctx.beginPath();
+      ctx.fillStyle = "red";
+      ctx.strokeStyle = "blue";
+      ctx.arc(event.offsetX,event.offsetY,10,0,2*Math.PI);
+      ctx.fill()
+      ctx.stroke();
+    }
+  */
+  }
+  zoomIn(){
+    this.zoomer += 0.3;
+    this.canvasWhite();
+    this.loadImage(this.currentImgPath);
+    console.log("zoomIn");
+  }
+  zoomOut(){
+    if(this.zoomer >= 0.3){
+      this.zoomer -= 0.3;
+      this.canvasWhite();
+      this.loadImage(this.currentImgPath);
+      console.log("zoomOut");
+    }
   }
 
   createMarkUp(ctx, x, y, color = "black", width = 3,  size = 10, mode = true, push = true){
     //mode é a variável que determina se o markup vai ser para abrir ou fechar.
     //push é a variável que determina se o markup vai ser colocado na lista stack.
-
     //lógica para controle de valor
+
+    console.log("------------------- 0 --------------------------")
     if(typeof width != 'number'){
         width = 3;
     }
@@ -174,7 +213,7 @@ export class CanvasComponent implements OnInit {
     if(size <= 0){
         size = 10;
     }
-
+    console.log("------------ 1 -------------");
     if(ctx != null && typeof ctx == "object"){
         console.log(`mode: ` + this.mode);
         if(mode){
@@ -199,6 +238,8 @@ export class CanvasComponent implements OnInit {
             ctx.stroke();
             ctx.closePath();
         }
+        console.log("------------ 2 -------------");
+        /*
         if(push){
             this.stack.push({
                 "x": x,
@@ -211,6 +252,7 @@ export class CanvasComponent implements OnInit {
             console.log(this.stack);
             this.garbageStack = [];
         }
+        */
         this.mode  = !this.mode;
     }
   }
@@ -246,20 +288,18 @@ export class CanvasComponent implements OnInit {
 
   loadImage(imgPath){
     var img = new Image();
-    img.crossOrigin = "anonymous";
+    //img.crossOrigin = "anonymous";
     img.src = imgPath;
     console.log("loadImage");
+
     img.onload = 
       ()=>{ 
         console.log(imgPath);
         var canvas: any = document.getElementById("myCanvas");
-        var height = img.height/1.5;
-        var width = img.width/1.5;
-        canvas.setAttribute("height", height);
-        canvas.setAttribute("width", width);
-        console.log(canvas.height, canvas.width);
+        var height = img.height/3;
+        var width = img.width/3;
         var context = canvas.getContext("2d");
-        context.drawImage(img, 0, 0, width, height);
+        context.drawImage(img, 20, 20, img.width/this.zoomer, img.height/this.zoomer);
       }
     
   }
@@ -267,7 +307,6 @@ export class CanvasComponent implements OnInit {
   recreateMarkUp(){
     var img = new Image();
     img.src = this.currentImgPath;
-    img.crossOrigin = "anonymous";
     console.log("reacreateMarkUp");
     img.onload = 
       ()=>{ 
@@ -279,13 +318,31 @@ export class CanvasComponent implements OnInit {
         canvas.setAttribute("width", width);
         var context = canvas.getContext("2d");
         context.drawImage(img, 0, 0, width, height);
+        /*an
         for(var i = 0; i < this.stack.length; i++){
           this.createMarkUp(context, this.stack[i].x, this.stack[i].y, this.stack[i].color, this.stack[i].width, this.stack[i].size, this.stack[i].mode, false);
-      }
+        }
+        */
     }
   }
 
   canvasClickHandler(mouseEvent){
+    console.log(mouseEvent);
+    var arr = []
+    var prop: string;
+    for(var prop in mouseEvent){
+      if(prop.search("X") != -1 || prop.search("Y") != -1){
+        console.log(`${prop} = ${mouseEvent[prop]}`);
+      }
+      else if(prop.search("x") != -1 || prop.search("y") != -1){
+        console.log(`${prop} = ${mouseEvent[prop]}`);
+      }
+      else{
+        arr.push(prop);
+      }
+    }
+    console.log(arr);
+  
     if(this.erasable){
       console.log("start erasing");
       this.eraseMark(mouseEvent);
@@ -297,10 +354,35 @@ export class CanvasComponent implements OnInit {
       var ctx = canvas.getContext("2d");
       var lineWidth: any = document.getElementById("lineWidth");
       var lineSize: any = document.getElementById("lineSize");
+      console.log("creating mark up")
+      console.log(this.color);
       this.createMarkUp(ctx, mouseEvent.offsetX, mouseEvent.offsetY, this.color, Math.round(lineWidth.value), Math.round(lineSize.value), this.mode, true);
       console.log(this.stack.length);
     }
-   
+  }
+
+  canvasWhite(){
+    var canvas: any = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.strokStyle = "white";
+    ctx.fillRect(0,0,500,500)
+    ctx.fill();
+    ctx.stroke();
+    ctx.rect(0,0,500,500);
+    ctx.clearRect(0,0,canvas.width, canvas.heigth);
+  }
+
+  whereWeAre(x: number, y: number){
+    this.loadImage(this.currentImgPath);
+    var canvas: any = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    ctx.beginPath();
+    ctx.fillStyle = "red";
+    ctx.strokeStyle = "blue";
+    ctx.arc(x,y,10,0,2*Math.PI);
+    ctx.fill()
+    ctx.stroke();
 
   }
 
